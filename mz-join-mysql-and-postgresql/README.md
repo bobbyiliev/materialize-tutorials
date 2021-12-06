@@ -1,8 +1,10 @@
-# Materialize Abandoned Cart Demo
+# How to join MySQL and Postgres in a live materialized view
 
 This is a self-contained demo using [Materialize](https://materialize.com/).
 
-This demo would show you how to use Materialize to keep an eye on your website orders and send you or your customers a notification when they have abandoned their cart for a long time without proceeding with their payment.
+This demo would show you how to use Materialize to join MySQL and Postgres in a live materialized view. 
+
+For this demo, we are going to monitor the orders on our demo website and generate events that could, later on, be used to send notifications when a cart has been abandoned for a long time.
 
 ![mz-abandoned-cart-demo](https://user-images.githubusercontent.com/21223421/143267063-2dbb1ec2-d48d-4ba5-8da8-f0d9ac1404e4.png)
 
@@ -24,7 +26,7 @@ As shown in the diagram above we will have the following components:
 - We also would have a Postgres database where we would get our users from.
 - We would then ingest this Redpanda topic into Materialize directly along with the users from the Postgres database.
 - In Materialize we will join our orders and users together, do some filtering and create a materialized view that shows the abandoned cart information.
-- We will then create a sink to send the abandoned cart data out to a new Redpanda topic. 
+- We will then create a sink to send the abandoned cart data out to a new Redpanda topic.
 - You could, later on, use the information from that new topic to send out notifications to your users and remind them that they have an abandoned cart.
 
 > As a side note here, you would be perfectly fine using Kafka instead of Redpanda. I just like the simplicity that Redpanda brings to the table, as you can run a single Redpanda instance instead of all of the Kafka components.
@@ -131,7 +133,14 @@ For more information on creating materialized views, check out the [Materialized
 
 ### Create Postgres source
 
-To create a PostgreSQL Materialize Source run the following statement:
+There are two ways to create a Postgres source in Materialize:
+
+- Using Debezium just like we did with the MySQL source.
+- Using the Postgres Materialize Source, which allows you to connect Materialize direct to Postgres so you don't have to use Debezium.
+
+For this demo, we will use the Postgres Materialize Source just as a demonstration on how to use it, but feel free to use Debezium instead.
+
+To create a Postgres Materialize Source run the following statement:
 
 ```sql
 CREATE MATERIALIZED SOURCE "mz_source" FROM POSTGRES
@@ -254,6 +263,12 @@ To stop all of the services run the following command:
 ```
 docker-compose down
 ```
+
+## Conclusion
+
+As you can see, this is a very simple example of how to use Materialize. You can use Materialize to ingest data from a variety of sources and then stream it to a variety of destinations.
+
+As a second part of this demo, we will build upon the current demo and add more functionality to make represent a more realistic eCommerce website and a more realistic data pipeline.
 
 ## Helpful resources:
 
