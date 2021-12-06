@@ -1,0 +1,15 @@
+{
+    "name": "mysql-connector",
+    "config": {
+        "connector.class": "io.debezium.connector.mysql.MySqlConnector",
+        "database.hostname": "mysql",
+        "database.port": "3306",
+        "database.user": "root",
+        "database.password": "debezium",
+        "database.server.name": "mysql",
+        "database.server.id": "1234",
+        "database.history.kafka.bootstrap.servers": "redpanda:9092",
+        "database.history.kafka.topic": "mysql-history",
+        "time.precision.mode": "connect"
+    }
+}

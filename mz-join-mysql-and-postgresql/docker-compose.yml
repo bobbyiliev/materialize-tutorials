@@ -1,0 +1,98 @@
+version: '3.9'
+services:
+  materialized:
+    image: materialize/materialized:v0.9.13
+    container_name: materialized
+    init: true
+    command: -w1 --disable-telemetry --experimental
+    ports:
+      - 6875:6875
+    depends_on:
+      - redpanda
+  mzcli:
+    image: materialize/cli
+    container_name: mzcli
+  redpanda:
+    image: docker.vectorized.io/vectorized/redpanda:v21.10.1
+    container_name: redpanda
+    command:
+     - redpanda start
+     - --overprovisioned
+     - --smp 1
+     - --memory 1G
+     - --reserve-memory 0M
+     - --node-id 0
+     - --check=false
+     - --kafka-addr 0.0.0.0:9092
+     - --advertise-kafka-addr redpanda:9092
+     - --pandaproxy-addr 0.0.0.0:8082
+     - --advertise-pandaproxy-addr redpanda:8082
+     - --set redpanda.enable_transactions=true
+     - --set redpanda.enable_idempotence=true
+    ports:
+     - 9092:9092
+     - 8081:8081
+     - 8082:8082
+  postgres:
+    build: ./postgres_image
+    container_name: postgres
+    ports:
+     - 5432:5432
+    environment:
+     - POSTGRES_USER=postgres
+     - POSTGRES_PASSWORD=postgres
+     - POSTGRES_DB=postgres
+    volumes:
+     - ${PWD}/postgres_image:/docker-entrypoint-initdb.d
+    depends_on:
+      - redpanda
+  mysql:
+    image: debezium/example-mysql:1.7
+    ports:
+     - 3306:3306
+    environment:
+     - MYSQL_ROOT_PASSWORD=debezium
+     - MYSQL_USER=mysqluser
+     - MYSQL_PASSWORD=mysqlpw
+     - MYSQL_DATABASE=shop
+    volumes:
+     - ${PWD}/mysql_image:/docker-entrypoint-initdb.d
+    depends_on:
+      - redpanda
+  debezium:
+    image: debezium/connect:1.7
+    container_name: debezium
+    environment:
+      BOOTSTRAP_SERVERS: redpanda:9092
+      GROUP_ID: 1
+      CONFIG_STORAGE_TOPIC: connect_configs
+      OFFSET_STORAGE_TOPIC: connect_offsets
+      KEY_CONVERTER: io.confluent.connect.avro.AvroConverter
+      VALUE_CONVERTER: io.confluent.connect.avro.AvroConverter
+      CONNECT_KEY_CONVERTER_SCHEMA_REGISTRY_URL: http://redpanda:8081
+      CONNECT_VALUE_CONVERTER_SCHEMA_REGISTRY_URL: http://redpanda:8081
+    depends_on:
+      - redpanda
+      - mysql
+      - metabase
+    ports:
+      - 8083:8083
+  metabase:
+    image: materialize/metabase:v0.0.5
+    container_name: metabase
+    depends_on:
+       - materialized
+    ports:
+      - 3030:3000
+  ordersgen:
+    build: orders_generation_mock
+    container_name: ordersgen
+    environment:
+     - MYSQL_USER=mysqluser
+     - MYSQL_PASSWORD=mysqlpw
+     - MYSQL_DATABASE=shop
+    depends_on:
+      - mysql
+      - redpanda
+      - debezium
+      - metabase
