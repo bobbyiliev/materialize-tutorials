@@ -29,3 +29,4 @@ Materialize is built upon [Timely Dataflow](https://github.com/TimelyDataflow/ti
 ## Contrutions:
 
 Any contributions are welcome! If you notice a bug or have a feature request, please open an issue or pull request.
+
