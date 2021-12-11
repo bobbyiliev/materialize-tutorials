@@ -36,13 +36,13 @@ As shown in the diagram above we will have the following components:
 First, start by cloning the repository:
 
 ```
-git clone https://github.com/bobbyiliev/mz-abandoned-cart-demo.git
+git clone https://github.com/bobbyiliev/materialize-tutorials.git
 ```
 
 After that you can access the directory:
 
 ```
-cd mz-abandoned-cart-demo
+cd materialize-tutorials/mz-join-mysql-and-postgresql
 ```
 
 Let's start by first running the Redpanda container:
