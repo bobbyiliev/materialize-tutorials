@@ -212,7 +212,7 @@ Redpanda will often be used in building rich data-intensive applications, let's 
 
 Notify user inactive users with incomplete orders:
 ```sql
-CREATE MATERIALIZED VIEW abandoned_cart2 AS
+CREATE MATERIALIZED VIEW abandoned_cart AS
     SELECT
         incomplate_purchases.user_id,
         incomplate_purchases.email,
