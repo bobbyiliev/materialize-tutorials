@@ -1,0 +1,39 @@
+version: 2
+
+sources:
+  - name: mysql_db
+    description: MySQL database containing the users, roles and reviews
+    tables:
+      - name: users
+        description: >
+          Users table
+      - name: roles
+        description: >
+          Roles table
+      - name: reviews
+        description: >
+          Reviews table
+
+models:
+  - name: vipusers
+    description: "List of all users with VIP role"
+
+  - name: badreviews
+    description: "List of all bad reviews"
+    columns:
+      - name: user
+        description: "The user"
+        tests:
+          - not_null
+      - name: changes
+        description: "The number of edits made by the user"
+
+  - name: vipusersbadreviews
+    description: "Vip users that left a bad review"
+    columns:
+      - name: user
+        description: "The user"
+        tests:
+          - not_null
+      - name: changes
+        description: "The number of edits made by the user"
