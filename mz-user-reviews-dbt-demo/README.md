@@ -159,6 +159,12 @@ This command generates executable SQL from our model files (found in the `models
 
 > Note: If you installed dbt-materialize in a virtual environment, make sure it's activated. If you don't have it installed, please revisit the setup above.
 
+Finally, you can run your dbt tests:
+
+```
+dbt test
+```
+
 #### Verify the Materialized Views are created
 
 Congratulations! You just used dbt to create materialized views in Materialize. You can verify the views were created from your psql shell connected to Materialize:
@@ -199,7 +205,9 @@ After that you can serve the docs by running the following command:
 dbt docs serve
 ```
 
-Then visit the docs at http://localhost:8080/dbt/docs/.
+Then visit the docs at http://localhost:8080/dbt/docs/. There you will have a list of all the views that were created and you can click on any of them to see the SQL that was generated. You would also see some nice Lineage Graphs that show the relationships between the views:
+
+![dbt Lineage Graph](https://user-images.githubusercontent.com/21223421/146348749-8fe67e3c-8587-42c0-aed4-8551ee2f1ff3.png)
 
 ## Metabase
 

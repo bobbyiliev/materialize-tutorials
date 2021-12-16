@@ -5,35 +5,92 @@ sources:
     description: MySQL database containing the users, roles and reviews
     tables:
       - name: users
+        columns:
+          - name: id
+          - name: role_id
+          - name: name
+          - name: email
         description: >
           Users table
       - name: roles
+        columns:
+          - name: id
+          - name: role_name
         description: >
           Roles table
       - name: reviews
+        columns:
+          - name: id
+          - name: user_id
+          - name: review_text
+          - name: review_rating
+          - name: created_at
+          - name: updated_at
         description: >
           Reviews table
 
 models:
   - name: vipusers
     description: "List of all users with VIP role"
+    columns:
+      - name: id
+        description: "Primary key"
+        tests:
+          - unique
+          - not_null
+      - name: name
+        description: "User's name"
+      - name: email
+        description: "User's email"
+      - name: role_id
+        description: "The role ID of the user"
+      - name: role_name
+        description: "The role name of the user"
 
   - name: badreviews
     description: "List of all bad reviews"
     columns:
-      - name: user
-        description: "The user"
+      - name: user_id
+        description: "The user ID"
         tests:
           - not_null
-      - name: changes
-        description: "The number of edits made by the user"
+      - name: review_text
+        description: "Review text"
+        tests:
+          - not_null
+      - name: review_rating
+        description: "Review rating"
+        tests:
+          - not_null
+      - name: created_at
+        description: "Creation date of the review"
+        tests:
+          - not_null
+      - name: updated_at
+        description: "Modify date of the review"
+        tests:
+          - not_null
 
   - name: vipusersbadreviews
     description: "Vip users that left a bad review"
     columns:
-      - name: user
-        description: "The user"
+      - name: name
+        description: "The name of the VIP user"
         tests:
           - not_null
-      - name: changes
-        description: "The number of edits made by the user"
+      - name: email
+        description: "User's email"
+        tests:
+          - not_null
+      - name: role_name
+        description: "The role name of the user"
+        tests:
+          - not_null
+      - name: review_rating
+        description: "Review rating"
+        tests:
+          - not_null
+      - name: review_text
+        description: "Review text"
+        tests:
+          - not_null
