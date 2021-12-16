@@ -16,6 +16,7 @@ Materialize is built upon [Timely Dataflow](https://github.com/TimelyDataflow/ti
 * [Learn Materialize by running streaming SQL on your nginx logs](./mz-nginx-logs)
 * [How to join MySQL and Postgres in a live materialized view](./mz-join-mysql-and-postgresql)
 * [Materialize - Raspberry Pi Temperature Sensors Demo](./mz-raspberry-pi-temperature)
+* [Materialize + dbt: User reviews demo](./mz-user-reviews-dbt-demo)
 * How to create abandoned cart alerts with Materialize
 
 ## Useful links
