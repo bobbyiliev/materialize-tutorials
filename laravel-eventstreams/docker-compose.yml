@@ -1,0 +1,122 @@
+version: "3.9"
+services:
+
+  app:
+    build:
+      context: ./dockerfiles
+      dockerfile: nginx.dockerfile
+      args:
+        - UID=${UID:-1000}
+        - GID=${GID:-1000}
+    container_name: nginx
+    environment:
+      - DB_CONNECTION=pgsql
+      - DB_HOST=postgres
+      - DB_PORT=5432
+      - DB_USERNAME=postgres
+      - DB_PASSWORD=postgres
+      - DB_DATABASE=postgres
+      - APP_KEY=base64:1OUhW3QpgCgrHhv8x+B5a9pf7lnxwoymPUfcLhANenI=
+    ports:
+      - 80:80
+    volumes:
+      - ${PWD}/laravel-app:/var/www/html:delegated
+    depends_on:
+      - php
+      - postgres
+    networks:
+      - eventstream
+
+  postgres:
+    build: ./postgres-image
+    container_name: postgres
+    ports:
+     - 5432:5432
+    environment:
+     - POSTGRES_USER=postgres
+     - POSTGRES_PASSWORD=postgres
+     - POSTGRES_DB=postgres
+    volumes:
+     - ${PWD}/postgres-image:/docker-entrypoint-initdb.d
+    networks:
+      - eventstream
+
+  php:
+    build:
+      context: ./dockerfiles
+      dockerfile: php.dockerfile
+      args:
+        - UID=${UID:-1000}
+        - GID=${GID:-1000}
+    container_name: php
+    environment:
+      - DB_CONNECTION=pgsql
+      - DB_HOST=postgres
+      - DB_PORT=5432
+      - DB_USERNAME=postgres
+      - DB_PASSWORD=postgres
+      - DB_DATABASE=postgres
+      - APP_KEY=base64:1OUhW3QpgCgrHhv8x+B5a9pf7lnxwoymPUfcLhANenI=
+    volumes:
+      - ${PWD}/laravel-app:/var/www/html:delegated
+    networks:
+      - eventstream
+
+  composer:
+    build:
+      context: ./dockerfiles
+      dockerfile: composer.dockerfile
+      args:
+        - UID=${UID:-1000}
+        - GID=${GID:-1000}
+    container_name: composer
+    volumes:
+      - ${PWD}/laravel-app:/var/www/html
+    working_dir: /var/www/html
+    depends_on:
+      - php
+    user: laravel
+    entrypoint: ['composer', '--ignore-platform-reqs']
+    networks:
+      - eventstream
+
+  artisan:
+    build:
+      context: ./dockerfiles
+      dockerfile: php.dockerfile
+      args:
+        - UID=${UID:-1000}
+        - GID=${GID:-1000}
+    container_name: artisan
+    environment:
+      - DB_CONNECTION=pgsql
+      - DB_HOST=postgres
+      - DB_PORT=5432
+      - DB_USERNAME=postgres
+      - DB_PASSWORD=postgres
+      - DB_DATABASE=postgres
+      - APP_KEY=base64:1OUhW3QpgCgrHhv8x+B5a9pf7lnxwoymPUfcLhANenI=
+    volumes:
+      - ${PWD}/laravel-app:/var/www/html:delegated
+    depends_on:
+      - postgres
+    working_dir: /var/www/html
+    entrypoint: ['php', '/var/www/html/artisan']
+    networks:
+      - eventstream
+
+  materialized:
+    image: materialize/materialized:v0.15.0
+    container_name: materialized
+    init: true
+    command: -w1 --disable-telemetry --experimental
+    ports:
+      - 6875:6875
+
+  mzcli:
+    image: materialize/cli
+    container_name: mzcli
+
+networks:
+  eventstream:
+    driver: bridge
