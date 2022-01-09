@@ -20,6 +20,7 @@ RUN sed -i "s/user = www-data/user = laravel/g" /usr/local/etc/php-fpm.d/www.con
 RUN sed -i "s/group = www-data/group = laravel/g" /usr/local/etc/php-fpm.d/www.conf
 RUN echo "php_admin_flag[log_errors] = on" >> /usr/local/etc/php-fpm.d/www.conf
 RUN echo "php_admin_flag[output_buffering] = on" >> /usr/local/etc/php-fpm.d/www.conf
+RUN echo 'php_admin_value[memory_limit] = 512M' >> /usr/local/etc/php-fpm.d/www.conf
 
 RUN set -ex \
   && apk --no-cache add \

@@ -11,6 +11,7 @@ services:
     container_name: nginx
     environment:
       - DB_CONNECTION=pgsql
+      - MZ_HOST=materialized
       - DB_HOST=postgres
       - DB_PORT=5432
       - DB_USERNAME=postgres
@@ -51,6 +52,7 @@ services:
     container_name: php
     environment:
       - DB_CONNECTION=pgsql
+      - MZ_HOST=materialized
       - DB_HOST=postgres
       - DB_PORT=5432
       - DB_USERNAME=postgres
@@ -112,10 +114,14 @@ services:
     command: -w1 --disable-telemetry --experimental
     ports:
       - 6875:6875
+    networks:
+      - eventstream
 
   mzcli:
     image: materialize/cli
     container_name: mzcli
+    networks:
+      - eventstream
 
 networks:
   eventstream:

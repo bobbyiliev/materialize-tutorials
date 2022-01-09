@@ -40,25 +40,4 @@ class TradesController extends Controller
         ]);
     }
 
-    public function stream()
-    {
-
-        ob_start();
-        return response()->stream(function () {
-            while (true) {
-                if (connection_aborted()) {
-                    break;
-                }
-                if ($messages = Trade::where('created_at', '>=', \Carbon\Carbon::now()->subSeconds(60))->get()) {
-                    echo "event: ping\n", "data: {$messages}", "\n\n";
-                }
-                ob_flush();
-                flush();
-                usleep(200000);
-            }
-        }, 200, [
-            'Cache-Control' => 'no-cache',
-            'Content-Type' => 'text/event-stream',
-        ]);
-    }
 }

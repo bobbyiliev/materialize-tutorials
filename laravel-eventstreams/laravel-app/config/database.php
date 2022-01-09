@@ -74,7 +74,20 @@ return [
             'charset' => 'utf8',
             'prefix' => '',
             'prefix_indexes' => true,
-            'schema' => 'public',
+            'schema' => 'materialize',
+            'sslmode' => 'prefer',
+        ],
+
+        'materialize' => [
+            'driver' => 'pgsql',
+            'url' => env('DATABASE_URL'),
+            'host' => env('MZ_HOST', '127.0.0.1'),
+            'port' => env('MZ_PORT', '6875'),
+            'database' => env('MZ_DATABASE', 'materialize'),
+            'username' => env('MZ_USERNAME', 'materialize'),
+            'password' => env('MZ_PASSWORD', 'materialize'),
+            'prefix' => '',
+            'prefix_indexes' => true,
             'sslmode' => 'prefer',
         ],
 
