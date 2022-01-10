@@ -59,6 +59,12 @@ Build the images:
 docker-compose build
 ```
 
+Then pull all of the other Docker images:
+
+```
+docker-compose pull
+```
+
 Finally, start all of the services:
 
 ```
@@ -74,46 +80,6 @@ docker-compose run mzcli
 > This is just a shortcut to a Docker container with a compatible CLI pre-installed; if you already have `psql` installed, you could instead connect to the running Materialize instance using that: `psql -U materialize -h localhost -p 6875 materialize`.
 
 As soon as the demo is running, the mock service will start generating reviews and users.
-
-### Create a Materialize Kafka/Redpanda Source
-
-Now that you're in the Materialize CLI, let's define three Kafka/Redpanda sources: `users`, `roles` and `reviews`, that will pull in the change data captured in Redpanda from the original tables in the `mysql.db`.
-
-```sql
-CREATE SOURCE users
-FROM KAFKA BROKER 'redpanda:9092' TOPIC 'mysql.db.users'
-FORMAT AVRO USING CONFLUENT SCHEMA REGISTRY 'http://redpanda:8081'
-ENVELOPE DEBEZIUM;
-
-CREATE SOURCE roles
-FROM KAFKA BROKER 'redpanda:9092' TOPIC 'mysql.db.roles'
-FORMAT AVRO USING CONFLUENT SCHEMA REGISTRY 'http://redpanda:8081'
-ENVELOPE DEBEZIUM;
-
-CREATE SOURCE reviews
-FROM KAFKA BROKER 'redpanda:9092' TOPIC 'mysql.db.reviews'
-FORMAT AVRO USING CONFLUENT SCHEMA REGISTRY 'http://redpanda:8081'
-ENVELOPE DEBEZIUM;
-```
-
-You can check the columns of the `reviews` source by running the following statement:
-
-```sql
-SHOW COLUMNS FROM reviews;
-```
-
-You'll see that, as Materialize is pulling the message schema from the [Redpanda registry](https://vectorized.io/blog/schema_registry/), it knows the column types to use for each attribute:
-
-```sql
-     name      | nullable |   type
----------------+----------+-----------
- id            | f        | bigint
- user_id       | t        | bigint
- review_text   | t        | text
- review_rating | t        | integer
- created_at    | t        | text
- updated_at    | t        | timestamp
-```
 
 ### Prepare dbt configuration
 
@@ -165,9 +131,30 @@ Finally, you can run your dbt tests:
 dbt test
 ```
 
-#### Verify the Materialized Views are created
+#### Verify the Materialized Views and Sources are created
 
-Congratulations! You just used dbt to create materialized views in Materialize. You can verify the views were created from your psql shell connected to Materialize:
+Congratulations! You just used dbt to create materialized views in Materialize.
+
+You can check the columns of the `reviews` source by running the following statement:
+
+```sql
+SHOW COLUMNS FROM analytics.reviews_raw;
+```
+
+You'll see that, as Materialize is pulling the message schema from the [Redpanda registry](https://vectorized.io/blog/schema_registry/), it knows the column types to use for each attribute:
+
+```sql
+     name      | nullable |   type
+---------------+----------+-----------
+ id            | f        | bigint
+ user_id       | t        | bigint
+ review_text   | t        | text
+ review_rating | t        | integer
+ created_at    | t        | text
+ updated_at    | t        | timestamp
+```
+
+You can verify the views were created from your psql shell connected to Materialize:
 
 ```sql
 SHOW VIEWS FROM analytics;
@@ -186,7 +173,7 @@ Output:
 You can also verify the data is being pulled from Redpanda by running the following query a few times:
 
 ```sql
-SELECT COUNT(*) FROM vipusersbadreviews;
+SELECT COUNT(*) FROM analytics.vipusersbadreviews;
 ```
 
 You will be able to see that the result changes each time you run the query, meaning that the data is being incrementally updated without you having to run `dbt run` again.
@@ -207,7 +194,7 @@ dbt docs serve
 
 Then visit the docs at http://localhost:8080/dbt/docs/. There, you will have a list of all the views that were created and you can click on any of them to see the SQL that was generated. You would also see some nice Lineage Graphs that show the relationships between the views:
 
-![dbt Lineage Graph](https://user-images.githubusercontent.com/21223421/146348749-8fe67e3c-8587-42c0-aed4-8551ee2f1ff3.png)
+![dbt Lineage Graph](https://user-images.githubusercontent.com/21223421/148784371-21a454d4-560a-40a4-a6d1-e2aefc543617.png)
 
 ## Metabase
 
