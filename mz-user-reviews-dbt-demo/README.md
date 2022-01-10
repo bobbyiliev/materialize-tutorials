@@ -20,6 +20,8 @@ Also, you would need to make sure that you have `dbt` (v0.18.1+) installed:
 
 > [Installing dbt](https://materialize.com/docs/third-party/dbt/)
 
+You can find the files for this demo in this [GitHub repository here](https://github.com/bobbyiliev/materialize-tutorials/blob/main/mz-user-reviews-dbt-demo/).
+
 ## Overview
 
 As shown in the diagram above, we will have the following components:
