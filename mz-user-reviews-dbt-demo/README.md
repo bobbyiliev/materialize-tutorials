@@ -6,7 +6,7 @@ This demo shows you how to use [dbt](https://docs.getdbt.com/docs/introduction) 
 
 For this demo, we are going to monitor the reviews left by users on a demo website, and use dbt to model our business logic, like getting a list of important users that left bad reviews. We will then explore how to use this data to potentially reach out to the flagged users and improve our website experience.
 
-![How to use dbt with Materialize](https://user-images.githubusercontent.com/21223421/146195691-e24401ab-20b5-43a2-b921-3dd6627d7f1f.png)
+![How to use dbt with Materialize](https://user-images.githubusercontent.com/21223421/148790925-fff39499-d8a3-4b2e-8488-13f61265b0a0.png)
 
 ## Prerequisites
 
