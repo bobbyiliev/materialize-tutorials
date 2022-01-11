@@ -313,6 +313,14 @@ Once ready you will be able to visualize your data just as you would with a stan
 
 ![Metabase](https://user-images.githubusercontent.com/21223421/142780602-043f36c7-f279-4dc7-8853-99ddb31b452f.png)
 
+## Conclusion
+
+This is a simple example of how to use the direct PostgreSQL connection with Materialize and stream data into a Kafka/Redpanda topic.
+
+In most cases, you would not store your IoT devices data in a PostgreSQL database, but in a Kafka topic. So the setup could be similar to the following:
+
+![IoT devices data with Materialize and Redpanda](https://user-images.githubusercontent.com/21223421/148971425-05e68138-6d82-48bc-98cc-c7417baf5ef8.png)
+
 ## Stopping the Demo
 
 To stop all of the services run the following command:
