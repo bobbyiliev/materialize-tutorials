@@ -1,6 +1,6 @@
 # Materialize - Raspberry Pi Temperature Sensors Demo
 
-This is a self-contained demo using [Materialize](https://materialize.com/) to process data directly from a PostgreSQL server.
+This is a self-contained demo using [Materialize](https://materialize.com/) to process data IoT devices data directly from a PostgreSQL server.
 
 The demo builds up on the [How to build AdonisJS API to store your Raspberry Pi Temperature tutorial](https://devdojo.com/bobbyiliev/how-to-build-adonisjs-api-to-store-your-raspberry-pi-temperature).
 
