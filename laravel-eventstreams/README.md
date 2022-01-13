@@ -30,6 +30,7 @@ You can follow the steps here on how to install Docker:
 
 * [Install Docker](https://docs.docker.com/get-docker/)
 * [Install Docker Compose](https://docs.docker.com/compose/install/)
+* [Install `psql`](https://www.postgresql.org/download/)
 
 ## Running the demo
 
@@ -109,9 +110,9 @@ Then create a [publication](https://www.postgresql.org/docs/current/logical-repl
 CREATE PUBLICATION mz_source FOR ALL TABLES;
 ```
 
-With that we are ready to start the Materialize setup.
+With that exit the `psql` prompt and then we are ready to start the Materialize setup.
 
-###
+### Materialize setup
 
 As we now have the PostgreSQL database setup, we can create a PostgreSQL source in Materialize:
 

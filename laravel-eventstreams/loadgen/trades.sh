@@ -18,7 +18,6 @@ while true; do
             type="sell"
         fi
         echo "{\"user_id\": $user_id, \"stock_id\": $stock_id, \"volume\": $volume, \"type\": \"$type\"}"
-        #curl -X POST http://app/trade -d "user_id=$user_id&stock_id=$stock_id&volume=$volume&type=$type"
         curl -X POST http://localhost/trade -d "user_id=$user_id&stock_id=$stock_id&volume=$volume&type=$type"
     done
 done
