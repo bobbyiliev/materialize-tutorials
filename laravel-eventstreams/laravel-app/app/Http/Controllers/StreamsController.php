@@ -59,7 +59,7 @@ class StreamsController extends Controller
 
         return response()->stream(function () {
             DB::connection('materialize')->statement('BEGIN');
-            DB::connection('materialize')->statement('DECLARE trades_c CURSOR FOR TAIL materialize_stream');
+            DB::connection('materialize')->statement('DECLARE trades_c CURSOR FOR TAIL latest_trades');
             while (true) {
                 echo "event: ping\n";
                 $curDate = date(DATE_ISO8601);

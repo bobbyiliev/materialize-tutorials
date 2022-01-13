@@ -56,3 +56,12 @@ CREATE MATERIALIZED VIEW "materialize_stream" AS
         trades.updated_at AS updated_at
     FROM users JOIN trades ON users.id = trades.user_id JOIN stocks ON trades.stock_id = stocks.id;
 ```
+
+Create view to show the latest trades that occurred in the last 1 minute:
+
+```sql
+CREATE MATERIALIZED VIEW "latest_trades" AS
+    SELECT * FROM materialize_stream
+        WHERE (mz_logical_timestamp() >= (extract('epoch' from created_at)*1000)::bigint
+        AND mz_logical_timestamp() < (extract('epoch' from created_at)*1000)::bigint + 60000);
+```
