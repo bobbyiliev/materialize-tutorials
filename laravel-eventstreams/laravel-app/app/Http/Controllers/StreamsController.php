@@ -75,7 +75,6 @@ class StreamsController extends Controller
                 ob_flush();
                 flush();
                 if (connection_aborted()) {break;}
-                usleep(50000); // 50ms
             }
         }, 200, [
             'Cache-Control' => 'no-cache',
