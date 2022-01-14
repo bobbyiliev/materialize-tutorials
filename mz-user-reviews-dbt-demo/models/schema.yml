@@ -4,7 +4,7 @@ sources:
   - name: mysql_db
     description: MySQL database containing the users, roles and reviews
     tables:
-      - name: users
+      - name: users_raw
         columns:
           - name: id
           - name: role_id
@@ -12,13 +12,13 @@ sources:
           - name: email
         description: >
           Users table
-      - name: roles
+      - name: roles_raw
         columns:
           - name: id
           - name: role_name
         description: >
           Roles table
-      - name: reviews
+      - name: reviews_raw
         columns:
           - name: id
           - name: user_id

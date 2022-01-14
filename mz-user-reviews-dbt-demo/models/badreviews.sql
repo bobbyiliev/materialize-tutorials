@@ -1,10 +1,10 @@
 {{ config(materialized='materializedview') }}
 
 SELECT
-    reviews.user_id,
-    reviews.review_text,
-    reviews.review_rating,
-    reviews.created_at,
-    reviews.updated_at
-FROM reviews
-WHERE reviews.review_rating < 3
+    reviews_raw.user_id,
+    reviews_raw.review_text,
+    reviews_raw.review_rating,
+    reviews_raw.created_at,
+    reviews_raw.updated_at
+FROM {{ ref('reviews_raw') }}
+WHERE reviews_raw.review_rating < 3
