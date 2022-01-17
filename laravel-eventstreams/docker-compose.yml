@@ -123,6 +123,14 @@ services:
     networks:
       - eventstream
 
+  tradesgen:
+    build: loadgen
+    container_name: tradesgen
+    depends_on:
+      - app
+    networks:
+      - eventstream
+
 networks:
   eventstream:
     driver: bridge

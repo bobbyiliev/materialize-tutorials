@@ -125,7 +125,8 @@ docker-compose run mzcli
 - Then, create the PostgreSQL source:
 
 ```sql
-CREATE MATERIALIZED SOURCE "mz_source" FROM POSTGRES                                                              CONNECTION 'user=postgres port=5432 host=postgres dbname=postgres password=postgres'
+CREATE MATERIALIZED SOURCE "mz_source" FROM POSTGRES
+CONNECTION 'user=postgres port=5432 host=postgres dbname=postgres password=postgres'
 PUBLICATION 'mz_source';
 ```
 
