@@ -91,6 +91,7 @@ services:
         - GID=${GID:-1000}
     container_name: artisan
     environment:
+      - MZ_HOST=materialized
       - DB_CONNECTION=pgsql
       - DB_HOST=postgres
       - DB_PORT=5432
