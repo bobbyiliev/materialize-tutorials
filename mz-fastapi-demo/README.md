@@ -8,7 +8,7 @@ Components:
 
 ## Diagram
 
-![FastAPI and Materialize Demo](https://user-images.githubusercontent.com/21223421/153421516-e1453b97-86e0-471e-b5ec-ede4b608e2f0.png)
+![FastAPI and Materialize Demo](https://user-images.githubusercontent.com/21223421/153422573-ef8d360e-4c31-42fa-ae8f-4327741659e7.png)
 
 ## Running the demo
 
