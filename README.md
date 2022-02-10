@@ -18,6 +18,7 @@ Materialize is built upon [Timely Dataflow](https://github.com/TimelyDataflow/ti
 * [Materialize - Raspberry Pi Temperature Sensors Demo](./mz-raspberry-pi-temperature)
 * [Materialize + dbt: User Reviews Demo](./mz-user-reviews-dbt-demo)
 * [Materialize + Laravel EventStream Demo](./laravel-eventstreams)
+* [Materialize + FastAPI Demo](./mz-fastapi-demo)
 * How to create abandoned cart alerts with Materialize
 
 ## Useful links

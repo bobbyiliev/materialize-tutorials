@@ -1,0 +1,47 @@
+version: '3.9'
+services:
+  materialized:
+    image: materialize/materialized:v0.19.0
+    container_name: materialized
+    init: true
+    command: -w1 --disable-telemetry --experimental
+    ports:
+      - 6875:6875
+    depends_on:
+      - redpanda
+  mzcli:
+    image: materialize/cli
+    container_name: mzcli
+  redpanda:
+    image: docker.vectorized.io/vectorized/redpanda:v21.10.1
+    container_name: redpanda
+    command:
+     - redpanda start
+     - --overprovisioned
+     - --smp 1
+     - --memory 1G
+     - --reserve-memory 0M
+     - --node-id 0
+     - --check=false
+     - --kafka-addr 0.0.0.0:9092
+     - --advertise-kafka-addr redpanda:9092
+     - --pandaproxy-addr 0.0.0.0:8082
+     - --advertise-pandaproxy-addr redpanda:8082
+     - --set redpanda.enable_transactions=true
+     - --set redpanda.enable_idempotence=true
+    ports:
+     - 9092:9092
+     - 8081:8081
+     - 8082:8082
+  datagen:
+    build: datagen
+    container_name: datagen
+    environment:
+      - REDPANDA_BROKERS=redpanda:9092
+    depends_on:
+      - redpanda
+  fastapi:
+    build: fastapi
+    container_name: fastapi
+    ports:
+      - 80:80
