@@ -145,6 +145,20 @@ FORMAT BYTES;
 
 - Download the Materialize instance certificate files from your Materialize Cloud dashboard.
 
+## Stop the demo
+
+To stop the demo, run the following command:
+
+```
+docker-compose down -v
+```
+
+You can also stop only the data generation container:
+
+```
+docker-compose stop datagen
+```
+
 ## Helpful Links
 
 - [Materialize](https://materialize.com)
