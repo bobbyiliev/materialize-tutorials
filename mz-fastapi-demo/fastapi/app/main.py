@@ -2,6 +2,7 @@ from re import T
 import databases
 import asyncio
 import sqlalchemy
+import os
 from fastapi import FastAPI, Request
 from typing import List
 from pydantic import BaseModel
@@ -11,9 +12,15 @@ from sse_starlette.sse import EventSourceResponse
 MESSAGE_STREAM_DELAY = 1  # second
 MESSAGE_STREAM_RETRY_TIMEOUT = 15000  # milisecond
 # Materialize connection
-DATABASE_URL = "postgresql://materialize:materialize@materialized:6875/materialize"
+DB_URL = os.getenv('DATABASE_URL', 'postgresql://materialize:materialize@materialized:6875/materialize')
 
-database = databases.Database(DATABASE_URL)
+# If you are planning to use the Materialize Cloud, make sure to download your certificate files from the Materialize Cloud dashboard and place them in the same directory as this file and then run the following commands to set the environment variables:
+# export PGSSLROOTCERT="./ca.crt"
+# export PGSSLMODE="verify-full"
+# export PGSSLKEY="./materialize.key"
+# export PGSSLCERT="./materialize.crt"
+
+database = databases.Database(DB_URL)
 
 metadata = sqlalchemy.MetaData()
 
@@ -28,7 +35,7 @@ notes = sqlalchemy.Table(
     sqlalchemy.Column("timestamp", sqlalchemy.DateTime)
 )
 
-engine = create_engine(DATABASE_URL)
+engine = create_engine(DB_URL)
 
 class NoteIn(BaseModel):
     id: int

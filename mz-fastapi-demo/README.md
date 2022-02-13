@@ -1,10 +1,13 @@
 # FastAPI and Materialize Demo
 
-Components:
+This is a self-contained demo of FastAPI and [Materialize](https://materialize.com).
 
-- [FastAPI](https://fastapi.tiangolo.com/)
-- [Materialize](https://materialize.com/)
-- [Redpanda](https://redpanda.com/)
+This demo project contains the following components:
+
+- [FastAPI](https://fastapi.tiangolo.com/): A fast, modern, and feature-rich framework for building APIs with Python.
+- [Redpanda](https://redpanda.com/): Kafka® compatible event streaming platform written in C++.
+- [Materialize](https://materialize.com/): A streaming database for real-time analytics.
+- A mock service written in [BASH for producing records to a Redpanda topic](https://devdojo.com/bobbyiliev/how-to-produce-records-to-a-topic-in-redpanda-from-a-shell-script). The mock service simulates data of air quality readings of IoT devices.
 
 ## Diagram
 
@@ -16,7 +19,11 @@ Clone the repository:
 
 ```shell
 git clone https://github.com/bobbyiliev/materialize-tutorials.git
+```
 
+Access the FastAPI demo project directory:
+
+```
 cd mz-fastapi-demo
 ```
 
@@ -32,7 +39,7 @@ Build the project:
 docker-compose build
 ```
 
-Finally, run the demo:
+Finally, run all containers:
 
 ```
 docker-compose up
@@ -40,7 +47,9 @@ docker-compose up
 
 ## Create the Materialize sources and views
 
-Start by creating a Redpanda/Kafka source:
+Once the demo is running, you can create the Materialize sources and views.
+
+Let's start by creating a Redpanda/Kafka [source](https://materialize.com/docs/sql/create-source/):
 
 ```sql
 CREATE SOURCE sensors
@@ -48,7 +57,7 @@ FROM KAFKA BROKER 'redpanda:9092' TOPIC 'sensors'
 FORMAT BYTES;
 ```
 
-Then create a non-materialized view which is essentially an alias that we will use to create our materialized views:
+Then create a [non-materialized view](https://materialize.com/docs/sql/create-view/#memory) which you can think of essentially an alias that we will use to create our materialized views. The non-materialized views do not store the results of the query:
 
 ```sql
 CREATE VIEW sensors_data AS
@@ -72,16 +81,20 @@ CREATE VIEW sensors_data AS
     );
 ```
 
-Create a materialized view for all of the sensors data:
+After that, create a materialized view that will hold all records in the last 10 minutes:
 
 ```sql
 CREATE MATERIALIZED VIEW sensors_view AS
     SELECT
         *
-    FROM sensors_data;
+    FROM sensors_data
+    WHERE
+        mz_logical_timestamp() < (timestamp*1000 + 100000)::numeric;
 ```
 
-Create materialized view that will only include data from the last second so we can see the dataflow:
+> Note that we are using the `mz_logical_timestamp()` function rather than the `now()` function. This is because in Materialize `now()` doesn’t represent the system time, as it does in most systems; it represents the time with timezone when the query was executed. It cannot be used when creating views. For more information, see the documentation [here](https://materialize.com/docs/sql/functions/now_and_mz_logical_timestamp/s).
+
+Next, let's create materialized view that will only include data from the last second so we can see the dataflow and use it for our Server-Sent Events (SSE) demo later on:
 
 ```sql
 CREATE MATERIALIZED VIEW sensors_view_1s AS
@@ -89,16 +102,54 @@ CREATE MATERIALIZED VIEW sensors_view_1s AS
         *
     FROM sensors_data
     WHERE
-        mz_logical_timestamp() < (timestamp*1000 + 6000)::numeric
-    ;
+        mz_logical_timestamp() < (timestamp*1000 + 6000)::numeric;
 ```
 
-Finally visit the FastAPI demo app via your browser:
+With that our materialized views are ready and we can visit the FastAPI demo project in the browser!
 
-- Endpoint for the last 1000 records:
+## FastAPI Demo
+
+Finally, visit the FastAPI demo app via your browser:
+
+- Endpoint for all records in the last 10 minutes:
 
 http://localhost/sensors
 
-- SSE Endpoint streaming the latest records as they are generated:
+- SSE Endpoint streaming the latest records as they are generated using [`TAIL`](https://materialize.com/docs/sql/tail):
 
 http://localhost/stream
+
+Example response:
+
+![SSE FastAPI with Materialize](https://user-images.githubusercontent.com/21223421/153751873-fdf77049-d0ef-40aa-b097-303472d69703.gif)
+
+## Materialize Cloud
+
+If you want to run the demo on the cloud, you would need the following:
+
+- A publicly accessible Redpanda/Kafka instance so that you can connect to it.
+- A Materialize Cloud account. You can sign up for a free [Materialize Cloud](https://materialize.com/cloud) account to get started with Materialize Cloud.
+
+If you already have that setup, you would need to make the following changes to the demo project:
+
+- When creating the source, change the `redpanda:9092` to your Redpanda/Kafka instance:
+
+```
+CREATE SOURCE sensors
+FROM KAFKA BROKER 'your_redpanda_instance:9092' TOPIC 'sensors'
+FORMAT BYTES;
+```
+
+- Change the `DATABASE_URL` environment variable to your Materialize Cloud database URL and uncomment the certificate-specific environment variables in the `docker-compose.yml` file.
+ in the `docker-compose.yml` file.
+
+- Download the Materialize instance certificate files from your Materialize Cloud dashboard.
+
+## Helpful Links
+
+- [Materialize](https://materialize.com)
+- [Materialize Cloud](https://materialize.com/cloud)
+- [Redpanda](https://redpanda.com)
+- [`CREATE SOURCE`](https://materialize.com/docs/sql/create-source/)
+- [`CREATE VIEW`](https://materialize.com/docs/sql/create-view/)
+- [`CREATE MATERIALIZED VIEW`](https://materialize.com/docs/sql/create-materialized-view/)
