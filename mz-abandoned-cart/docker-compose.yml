@@ -1,7 +1,7 @@
 version: '3.7'
 services:
   materialized:
-    image: materialize/materialized:v0.18.0
+    image: materialize/materialized:v0.19.0
     init: true
     command: -w2 --disable-telemetry
     ports:
