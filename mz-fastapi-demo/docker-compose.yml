@@ -43,5 +43,15 @@ services:
   fastapi:
     build: fastapi
     container_name: fastapi
+    environment:
+      - DATABASE_URL=postgresql://materialize:materialize@materialized:6875/materialize
+      # To use Materialize Cloud, uncomment the following line and replace the
+      # - PGSSLROOTCERT=./ca.crt
+      # - PGSSLMODE=verify-full
+      # - PGSSLKEY=./materialize.key
+      # - PGSSLCERT=./materialize.crt
+      # - DATABASE_URL=postgresql://materialize@your_materialize_cloud_instance.materialize.cloud:6875/materialize
     ports:
       - 80:80
+    depends_on:
+      - materialized
