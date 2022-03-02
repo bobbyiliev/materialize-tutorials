@@ -1,0 +1,18 @@
+{
+    "name": "inventory-connector",
+    "config": {
+        "name": "inventory-connector",
+        "connector.class": "io.debezium.connector.postgresql.PostgresConnector",
+        "tasks.max": "1",
+        "database.hostname": "gateway.docker.internal",
+        "database.port": "5432",
+        "database.dbname": "postgres",
+        "database.user": "postgres",
+        "database.password": "postgres",
+        "database.server.name": "gateway.docker.internal",
+        "plugin.name": "pgoutput",
+        "slot.name": "debezium",
+        "publication.name": "dbz_publication",
+        "table.include.list": "materialize.trades"
+    }
+}

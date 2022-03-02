@@ -7,6 +7,17 @@
 #  - the volume: random number between 1 and 100
 #  - the type: buy or sell
 
+# Check if the Laravel Websockets demo is running
+while true; do
+    echo "Waiting for Laravel Websockets demo to be ready"
+    sleep 0.1
+    curl -s -o /dev/null -w "%{http_code}" http://app/ | grep 200
+    if [ $? -eq 0 ]; then
+        echo "Laravel Websockets demo is ready"
+        break
+    fi
+done
+
 while true; do
     for user_id in {1..10000} ; do
         stock_id=$((RANDOM % 25 + 1))

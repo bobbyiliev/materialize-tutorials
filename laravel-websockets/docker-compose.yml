@@ -18,6 +18,12 @@ services:
       - DB_PASSWORD=postgres
       - DB_DATABASE=postgres
       - APP_KEY=base64:1OUhW3QpgCgrHhv8x+B5a9pf7lnxwoymPUfcLhANenI=
+      - BROADCAST_DRIVER=pusher
+      - APP_URL=http://localhost
+      - PUSHER_APP_ID=12345
+      - PUSHER_APP_KEY=ABCDEFG
+      - PUSHER_APP_SECRET=HIJKLMNOP
+      - PUSHER_APP_CLUSTER=mt1
     ports:
       - 80:80
     volumes:
@@ -26,7 +32,60 @@ services:
       - php
       - postgres
     networks:
-      - eventstream
+      - websockets
+
+  websockets:
+    build:
+      context: ./dockerfiles
+      dockerfile: php.dockerfile
+      args:
+        - UID=${UID:-1000}
+        - GID=${GID:-1000}
+    container_name: websockets
+    environment:
+      - DB_CONNECTION=pgsql
+      - MZ_HOST=materialized
+      - DB_HOST=postgres
+      - DB_PORT=5432
+      - DB_USERNAME=postgres
+      - DB_PASSWORD=postgres
+      - DB_DATABASE=postgres
+      - APP_KEY=base64:1OUhW3QpgCgrHhv8x+B5a9pf7lnxwoymPUfcLhANenI=
+      - BROADCAST_DRIVER=pusher
+      - APP_URL=http://localhost
+      - PUSHER_APP_ID=12345
+      - PUSHER_APP_KEY=ABCDEFG
+      - PUSHER_APP_SECRET=HIJKLMNOP
+      - PUSHER_APP_CLUSTER=mt1
+    ports:
+      - 6001:6001
+    command:
+      - /bin/sh
+      - -c
+      - |
+        echo "Waiting for postgres..."
+        until nc -z postgres 5432; do
+          sleep 0.1
+        done
+        echo "Check if composer install is ready..."
+        until [ -d /var/www/html/vendor ]; do
+          sleep 0.1
+        done
+        until [ -f /var/www/html/vendor/autoload.php ]; do
+          sleep 0.1
+        done
+        echo "Postgres is up - running migrations and seeding"
+        php artisan migrate && php artisan db:seed
+        echo "Running websockets server"
+        php artisan websockets:serve
+    depends_on:
+      - php
+      - postgres
+      - composer-install
+    volumes:
+      - ${PWD}/laravel-app:/var/www/html:delegated
+    networks:
+      - websockets
 
   postgres:
     build: ./postgres-image
@@ -40,7 +99,7 @@ services:
     volumes:
      - ${PWD}/postgres-image:/docker-entrypoint-initdb.d
     networks:
-      - eventstream
+      - websockets
 
   php:
     build:
@@ -59,10 +118,15 @@ services:
       - DB_PASSWORD=postgres
       - DB_DATABASE=postgres
       - APP_KEY=base64:1OUhW3QpgCgrHhv8x+B5a9pf7lnxwoymPUfcLhANenI=
+      - BROADCAST_DRIVER=pusher
+      - PUSHER_APP_ID=12345
+      - PUSHER_APP_KEY=ABCDEFG
+      - PUSHER_APP_SECRET=HIJKLMNOP
+      - PUSHER_APP_CLUSTER=mt1
     volumes:
       - ${PWD}/laravel-app:/var/www/html:delegated
     networks:
-      - eventstream
+      - websockets
 
   composer:
     build:
@@ -80,7 +144,25 @@ services:
     user: laravel
     entrypoint: ['composer', '--ignore-platform-reqs']
     networks:
-      - eventstream
+      - websockets
+
+  composer-install:
+    build:
+      context: ./dockerfiles
+      dockerfile: composer.dockerfile
+      args:
+        - UID=${UID:-1000}
+        - GID=${GID:-1000}
+    container_name: composer-install
+    volumes:
+      - ${PWD}/laravel-app:/var/www/html
+    working_dir: /var/www/html
+    depends_on:
+      - php
+    user: laravel
+    entrypoint: ['composer', 'install']
+    networks:
+      - websockets
 
   artisan:
     build:
@@ -99,6 +181,11 @@ services:
       - DB_PASSWORD=postgres
       - DB_DATABASE=postgres
       - APP_KEY=base64:1OUhW3QpgCgrHhv8x+B5a9pf7lnxwoymPUfcLhANenI=
+      - BROADCAST_DRIVER=pusher
+      - PUSHER_APP_ID=12345
+      - PUSHER_APP_KEY=ABCDEFG
+      - PUSHER_APP_SECRET=HIJKLMNOP
+      - PUSHER_APP_CLUSTER=mt1
     volumes:
       - ${PWD}/laravel-app:/var/www/html:delegated
     depends_on:
@@ -106,7 +193,7 @@ services:
     working_dir: /var/www/html
     entrypoint: ['php', '/var/www/html/artisan']
     networks:
-      - eventstream
+      - websockets
 
   materialized:
     image: materialize/materialized:v0.19.0
@@ -116,13 +203,13 @@ services:
     ports:
       - 6875:6875
     networks:
-      - eventstream
+      - websockets
 
   mzcli:
     image: materialize/cli
     container_name: mzcli
     networks:
-      - eventstream
+      - websockets
 
   tradesgen:
     build: loadgen
@@ -130,8 +217,8 @@ services:
     depends_on:
       - app
     networks:
-      - eventstream
+      - websockets
 
 networks:
-  eventstream:
+  websockets:
     driver: bridge
