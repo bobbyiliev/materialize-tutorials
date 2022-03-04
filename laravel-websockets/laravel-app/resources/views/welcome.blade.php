@@ -15,34 +15,42 @@
         <div class="container w-full mx-auto pt-20">
             <div class="w-full px-4 md:px-0 md:mt-8 mb-16 text-gray-800 leading-normal">
 
-                <div class="flex flex-wrap">
-                    <div class="w-full md:w-2/2 xl:w-3/3 p-3">
-                        <div class="bg-white border rounded shadow p-2">
-                            <div class="flex flex-row items-center">
-                                <div class="flex-shrink pr-4">
-                                    <div class="rounded p-3 bg-yellow-600"><i class="fas fa-user-plus fa-2x fa-fw fa-inverse"></i></div>
-                                </div>
-                                <div class="flex-1 text-right md:text-center">
-                                    <h5 class="font-bold uppercase text-gray-500">Latest trade</h5>
-                                    <h3 class="font-bold text-3xl">
-                                        <p>
-                                            Name: <span id="latest_trade_user"></span>
-                                        </p>
-                                    </h3>
-                                </div>
+                <div class="flex flex-row flex-wrap flex-grow mt-2">
+                    <div class="w-full p-3">
+                        <div class="bg-white border rounded shadow">
+                            <div class="border-b p-3">
+                                <h5 class="font-bold uppercase text-gray-600">Table</h5>
+                            </div>
+                            <div class="p-5 overflow-scroll h-32">
+                                <table class="w-full p-5 text-gray-700">
+                                    <thead>
+                                        <tr>
+                                            <th class="text-left text-blue-900">Trades in the last 60 seconds</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="allTrades">
+                                    </tbody>
+                                </table>
                             </div>
                         </div>
                     </div>
                 </div>
+
             </div>
         </div>
     </body>
     <script src="{{ asset('js/app.js') }}"></script>
     <script>
+        var eventSourceTail = new EventSource("/ws");
+
         Echo.channel('trades')
-            .listen('NewTrade', (e) => {
-                console.log(e.trade);
-                document.getElementById('latest_trade_user').innerText = e.trade;
+            .listen('NewTrade', (event) => {
+                console.log(event.trade);
+                const newElement = document.createElement("tr");
+                const eventList = document.getElementById("allTrades");
+                newElement.textContent = "Trade: " + event.trade.user_name + " | Action: " + event.trade.trade_type + " | Price: " + event.trade.stock_price;
+                //newElement.textContent = "ping at " + time;
+                eventList.prepend(newElement);
             })
 
     </script>

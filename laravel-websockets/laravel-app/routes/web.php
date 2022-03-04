@@ -15,10 +15,7 @@ use App\Http\Controllers\StreamsController;
 |
 */
 
-Route::post('/trade', [TradesController::class, 'store']);
-Route::get('/stream', [StreamsController::class, 'stream']);
-Route::get('/mz-stream', [StreamsController::class, 'mzStream']);
-Route::get('/tail', [StreamsController::class, 'tail']);
+Route::get('/ws', [StreamsController::class, 'ws']);
 
 Route::get('/', function () {
     return view('welcome');

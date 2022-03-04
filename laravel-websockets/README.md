@@ -60,28 +60,6 @@ docker-compose up -d
 
 It might take a couple of minutes to start the containers. After that, we are ready to complete the Laravel setup.
 
-### Laravel setup
-
-In order to get the Laravel setup done, you need to run the following commands:
-
-- Install the Laravel dependencies:
-
-```
-docker-compose run --rm composer install
-```
-
-- Run the database migrations:
-
-```
-docker-compose run --rm artisan migrate
-```
-
-- Run the database seeds:
-
-```
-docker-compose run --rm artisan db:seed
-```
-
 ### PostgreSQL setup
 
 Before we get started with the Materialize setup, we need to prepare the PostgreSQL database as per the official documentation here:
@@ -170,10 +148,6 @@ For more information, about the `mz_logical_timestamp()` function, see [Material
 ## Viewing the trades
 
 To access the dashboard, you can visit `http://localhost/` in your browser.
-
-The dashboard will show the trades that happened in the last minute:
-
-![EventStream simple dashboard](https://user-images.githubusercontent.com/21223421/149408173-7a76c837-314b-419a-a589-d6867fc55c99.gif)
 
 ## Helpful resources:
 
