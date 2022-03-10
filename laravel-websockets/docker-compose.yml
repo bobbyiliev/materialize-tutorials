@@ -196,7 +196,7 @@ services:
       - websockets
 
   materialized:
-    image: materialize/materialized:v0.19.0
+    image: materialize/materialized:v0.22.0
     container_name: materialized
     init: true
     command: -w1 --disable-telemetry --experimental
