@@ -1,0 +1,12 @@
+fastapi>=0.68.0,<0.69.0
+pydantic>=1.8.0,<2.0.0
+uvicorn>=0.15.0,<0.16.0
+SQLAlchemy==1.4.31
+databases==0.5.5
+asyncpg==0.25.0
+psycopg2==2.9.3
+psycopg2-binary==2.9.2
+sse-starlette==0.10.3
+asyncio==3.4.3
+anyio==3.5.0
+alembic==1.7.6
