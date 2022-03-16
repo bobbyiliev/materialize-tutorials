@@ -43,11 +43,14 @@ def run_migrations_offline():
         target_metadata=target_metadata,
         literal_binds=True,
         dialect_opts={"paramstyle": "named"},
+        # version_table_pk=False,
+        transactional_ddl=False,
+        transaction_per_migration=False
     )
 
-    with context.begin_transaction():
-        context.run_migrations()
-
+    # with context.begin_transaction():
+    #     context.run_migrations()
+    context.run_migrations()
 
 def run_migrations_online():
     """Run migrations in 'online' mode.
@@ -64,11 +67,14 @@ def run_migrations_online():
 
     with connectable.connect() as connection:
         context.configure(
-            connection=connection, target_metadata=target_metadata
+            connection=connection, target_metadata=target_metadata,
+            # version_table_pk=False,
+            transactional_ddl=False,
+            transaction_per_migration=False
         )
-
-        with context.begin_transaction():
-            context.run_migrations()
+        # with context.begin_transaction():
+        #     context.run_migrations()
+        context.run_migrations()
 
 
 if context.is_offline_mode():

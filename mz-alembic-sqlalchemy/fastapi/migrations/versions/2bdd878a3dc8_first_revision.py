@@ -9,7 +9,7 @@ from alembic import op
 from sqlalchemy import create_engine
 import sqlalchemy as sa
 
-engine = create_engine('postgresql://materialize:materialize@localhost:6875/materialize')
+engine = create_engine('postgresql://materialize:materialize@localhost:6875/materialize', isolation_level="READ UNCOMMITTED")
 
 # revision identifiers, used by Alembic.
 revision = '2bdd878a3dc8'
@@ -19,16 +19,15 @@ depends_on = None
 
 
 def upgrade():
-    engine.execute('SHOW TABLES')
-    # op.create_table('users',
-    #                 sa.Column('id', sa.Integer(), nullable=False),
-    #                 sa.Column('username', sa.String(length=80), nullable=False),
-    #                 sa.Column('password', sa.String(length=80), nullable=False),
-    #                 sa.PrimaryKeyConstraint('id'),
-    #                 sa.UniqueConstraint('username')
-    #                 )
+    # engine.execute('SHOW TABLES')
+    with op.get_context().autocommit_block():
+        op.create_table('users',
+                        sa.Column('username', sa.String(length=80), nullable=False),
+                        sa.Column('password', sa.String(length=80), nullable=False)
+                        )
 
 
 def downgrade():
-    op.drop_table('users')
+    with op.get_context().autocommit_block():
+        op.drop_table('users')
 

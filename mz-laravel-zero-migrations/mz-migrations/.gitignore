@@ -1,7 +1,0 @@
-/vendor
-/.idea
-/.vscode
-/.vagrant
-.phpunit.result.cache
-.env
-/database/database.sqlite
