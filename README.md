@@ -12,17 +12,31 @@ Materialize is built upon [Timely Dataflow](https://github.com/TimelyDataflow/ti
 
 ## Tutorials list
 
-* [Building a real-time web application with Materialize and AdonisJS](./mz-adonis-demo)
 * [Learn Materialize by running streaming SQL on your nginx logs](./mz-nginx-logs)
 * [How to join MySQL and Postgres in a live materialized view](./mz-join-mysql-and-postgresql)
-* [Materialize - Raspberry Pi Temperature Sensors Demo](./mz-raspberry-pi-temperature)
+
+### dbt
+
 * [Materialize + dbt: User Reviews Demo](./mz-user-reviews-dbt-demo)
-* [Materialize + Laravel EventStream Demo](./laravel-eventstreams)
-* [Materialize + FastAPI Demo](./mz-fastapi-demo)
 * How to create abandoned cart alerts with Materialize
+
+### Node.js / Adonis.js
+
+* [Building a real-time web application with Materialize and AdonisJS](./mz-adonis-demo)
+* [Materialize - Raspberry Pi Temperature Sensors Demo](./mz-raspberry-pi-temperature)
+
+### Python / FastAPI
+
+* [Materialize + FastAPI Demo](./mz-fastapi-demo)
+
+### PHP / Laravel
+
+* [Materialize + Laravel EventStream Demo](./laravel-eventstreams)
+* [Materialize Migrations + Laravel Zero](./mz-laravel-zero-migrations)
 
 ## Useful links
 
+* [Materialize Cloud](https://materialize.com/cloud)
 * [Official Materialize documentation](https://materialize.com/docs)
 * [Materialize GitHub repository](https://github.com/MaterializeInc/Materialize)
 * [Materialize website](https://materialize.com)
