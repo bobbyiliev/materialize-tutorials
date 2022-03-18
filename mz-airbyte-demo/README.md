@@ -1,5 +1,19 @@
 # MySQL -> Airbyte -> Kafka -> Materialize -> Live dashboard
 
+This is a self-contained demo using [Materialize](https://materialize.com).
+
+This demo would show you how to use Materialize with Airbyte to create a live dashboard.
+
+For this demo, we are going to monitor the orders on our demo website and generate events that could, later on, be used to send notifications when a cart has been abandoned for a long time.
+
+This demo is an extension of the [How to join PostgreSQL and MySQL in a live Materialized view](https://devdojo.com/bobbyiliev/how-to-join-mysql-and-postgres-in-a-live-materialized-view) tutorial but rather than using Debezium CDC, we are going to use Airbyte to incrementally extract the orders from MySQL over [CDC](https://materialize.com/docs/connect/materialize-cdc/).
+
+## Diagram:
+
+<img width="1442" alt="image" src="https://user-images.githubusercontent.com/21223421/158989609-45cd719d-7326-4a60-bc01-e75b663851dd.png">
+
+## Running the demo
+
 For Mac M1 make sure to run the follwoing:
 
 ```
@@ -14,14 +28,8 @@ export JDK_VERSION=17
 
 Start all services:
 
-```
+```bash
 docker-compose up -d
-```
-
-Let the ordergen service generate some orders and then stop the services:
-
-```
-docker-compose stop ordergen
 ```
 
 ## Airbyte
@@ -30,19 +38,19 @@ Setup the Airbyte service by visiting `your_server_ip:8080` and follow the instr
 
 ## Create a `SOURCE`
 
-```
+```bash
 docker-compose run mzcli
 ```
 
 Or if you have `psql` installed:
 
-```
+```bash
 psql -U materialize -h localhost -p 6875 materialize
 ```
 
 Create a `SOURCE`:
 
-```
+```sql
 CREATE SOURCE json_source
   FROM KAFKA BROKER 'redpanda:9092' TOPIC 'shop_topic'
   FORMAT BYTES;
@@ -52,7 +60,7 @@ CREATE SOURCE json_source
 
 Use `TAIL` to quickly see the data:
 
-```
+```sql
 COPY (
     TAIL (
         SELECT
@@ -72,7 +80,7 @@ TO STDOUT;
 
 Next create a materialized view:
 
-```
+```sql
 CREATE MATERIALIZED VIEW jsonified_kafka_source AS
   SELECT
     data->>'id' AS id,
@@ -93,4 +101,12 @@ CREATE MATERIALIZED VIEW jsonified_kafka_source AS
             )
         )
     );
+```
+
+## Stop the demo
+
+To stop the demo, run:
+
+```bash
+docker-compose down -v
 ```
