@@ -38,19 +38,49 @@ services:
      - 9092:9092
      - 8081:8081
      - 8082:8082
-  mariadb:
-    image: mariadb
+  mysql:
+    image: mysql/mysql-server:8.0
+    container_name: mysql
+    hostname: mysql
     ports:
-     - 3306:3306
+      - "3306:3306"
+    restart: unless-stopped
     environment:
-     - MARIADB_ROOT_PASSWORD=password
-     - MARIADB_USER=airbyte
-     - MARIADB_PASSWORD=password
-     - MARIADB_DATABASE=shop
+      - MYSQL_ROOT_PASSWORD=mypass
+      - MYSQL_USER=airbyte
+      - MYSQL_PASSWORD=password
+      - MYSQL_DATABASE=shop
+    command: ["mysqld",
+      "--server-id=1",
+      "--log-bin=mysql-bin-1.log",
+      "--enforce-gtid-consistency=ON",
+      "--log-slave-updates=ON",
+      "--gtid-mode=ON",
+      "--transaction-write-set-extraction=XXHASH64",
+      "--binlog-checksum=NONE",
+      "--binlog-format=ROW",
+      "--binlog-row-image=FULL",
+      "--master-info-repository=TABLE",
+      "--relay-log-info-repository=TABLE",
+      "--plugin-load=group_replication.so",
+      "--relay-log-recovery=ON"]
+    healthcheck:
+      test: "mysqladmin ping -u root -p$${MYSQL_ROOT_PASSWORD}"
+      interval: 2s
+      retries: 20
     volumes:
      - ${PWD}/mysql_image:/docker-entrypoint-initdb.d
-    depends_on:
-      - redpanda
+  # mariadb:
+  #   image: mariadb
+  #   ports:
+  #    - 3306:3306
+  #   environment:
+  #    - MARIADB_ROOT_PASSWORD=password
+  #    - MARIADB_USER=airbyte
+  #    - MARIADB_PASSWORD=password
+  #    - MARIADB_DATABASE=shop
+  #   volumes:
+  #    - ${PWD}/mysql_image:/docker-entrypoint-initdb.d
   ordersgen:
     build: orders_generation_mock
     container_name: ordersgen
@@ -59,7 +89,7 @@ services:
      - MYSQL_PASSWORD=password
      - MYSQL_DATABASE=shop
     depends_on:
-      - mariadb
+      - mysql
       - redpanda
   init:
     image: airbyte/init:${VERSION}
