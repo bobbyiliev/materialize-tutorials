@@ -14,6 +14,7 @@ Materialize is built upon [Timely Dataflow](https://github.com/TimelyDataflow/ti
 
 * [Learn Materialize by running streaming SQL on your nginx logs](./mz-nginx-logs)
 * [How to join MySQL and Postgres in a live materialized view](./mz-join-mysql-and-postgresql)
+* [Using Materialize and Airbyte with MySQL and Redpanda/Kafka](./mz-airbyte-demo)
 
 ### dbt
 

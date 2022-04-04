@@ -1,4 +1,4 @@
-# MySQL -> Airbyte -> Kafka -> Materialize -> Live dashboard
+# Using Materialize and Airbyte with MySQL and Redpanda/Kafka
 
 This is a self-contained demo using [Materialize](https://materialize.com).
 
