@@ -47,7 +47,7 @@ docker-compose up -d
 
 ## Airbyte
 
-Setup the Airbyte service by visiting `your_server_ip:8080` and follow the instructions.
+Setup the Airbyte service by visiting `your_server_ip:8000` and follow the instructions.
 
 ### Adding a source
 
