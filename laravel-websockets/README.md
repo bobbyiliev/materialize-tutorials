@@ -155,3 +155,7 @@ To access the dashboard, you can visit `http://localhost/` in your browser.
 * [`CREATE SOURCE`](https://materialize.com/docs/sql/create-source/)
 * [`CREATE VIEWS`](https://materialize.com/docs/sql/create-views)
 * [`SELECT`](https://materialize.com/docs/sql/select)
+
+## Community
+
+If you have any questions or comments, please join the [Materialize Slack Community](https://materialize.com/s/chat)!

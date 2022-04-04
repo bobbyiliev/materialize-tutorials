@@ -239,3 +239,7 @@ To learn more about dbt and Materialize, check out the documentation here:
 * [`CREATE SOURCE`](https://materialize.com/docs/sql/create-source/)
 * [`CREATE MATERIALIZED VIEW`](https://materialize.com/docs/sql/create-materialized-view/)
 * [`SELECT`](https://materialize.com/docs/sql/select)
+
+## Community
+
+If you have any questions or comments, please join the [Materialize Slack Community](https://materialize.com/s/chat)!

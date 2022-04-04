@@ -432,3 +432,7 @@ To learn more about Streaming SQL, make sure to check out this post here:
 [Streaming SQL: What is it, why is it useful?](https://materialize.com/streaming-sql-intro/)
 
 Hope that this was helpful!
+
+## Community
+
+If you have any questions or comments, please join the [Materialize Slack Community](https://materialize.com/s/chat)!

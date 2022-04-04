@@ -167,3 +167,7 @@ docker-compose stop datagen
 - [`CREATE SOURCE`](https://materialize.com/docs/sql/create-source/)
 - [`CREATE VIEW`](https://materialize.com/docs/sql/create-view/)
 - [`CREATE MATERIALIZED VIEW`](https://materialize.com/docs/sql/create-materialized-view/)
+
+## Community
+
+If you have any questions or comments, please join the [Materialize Slack Community](https://materialize.com/s/chat)!

@@ -274,3 +274,7 @@ By now, hopefully you have a hands-on understanding of how incrementally maintai
 If you are totally new to SQL, make sure to check out this free eBook here:
 
 [Free introduction to SQL basics eBook](https://github.com/bobbyiliev/introduction-to-sql)
+
+## Community
+
+If you have any questions or comments, please join the [Materialize Slack Community](https://materialize.com/s/chat)!

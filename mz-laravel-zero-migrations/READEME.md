@@ -295,3 +295,7 @@ How do you manage your schema migrations? I would love to hear about the tools t
 To learn more about Materialize, check out the [official Materialize documentation](https://materialize.com/docs/).
 
 If you need any help, please join the [Materialize Community Slack channel](https://materialize.com/s/chat).
+
+## Community
+
+If you have any questions or comments, please join the [Materialize Slack Community](https://materialize.com/s/chat)!
