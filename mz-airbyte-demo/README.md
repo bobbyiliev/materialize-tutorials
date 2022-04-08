@@ -242,6 +242,10 @@ docker-compose down -v
 - [Materialize demos](https://materialize.com/docs/demos/)
 - [Redpanda](https://redpanda.com/)
 
+For a similar version of this demo using Debezium, check out the post here:
+
+- [How to join MySQL and Postgres in a live materialized view](https://devdojo.com/bobbyiliev/how-to-join-mysql-and-postgres-in-a-live-materialized-view)
+
 ## Community
 
 If you have any questions or comments, please join the [Materialize Slack Community](https://materialize.com/s/chat)!
