@@ -1,0 +1,33 @@
+{
+  "name": "tracking-app",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "node ace serve --watch",
+    "build": "node ace build --production",
+    "start": "node server.js"
+  },
+  "devDependencies": {
+    "@adonisjs/assembler": "^5.6.0",
+    "@symfony/webpack-encore": "^1.8.2",
+    "adonis-preset-ts": "^2.1.0",
+    "pino-pretty": "^7.6.1",
+    "typescript": "~4.5",
+    "youch": "^3.1.1",
+    "youch-terminal": "^2.1.3"
+  },
+  "dependencies": {
+    "@adonisjs/core": "^5.7.2",
+    "@adonisjs/lucid": "^17.2.0",
+    "@adonisjs/repl": "^3.1.10",
+    "@adonisjs/session": "^6.2.2",
+    "@adonisjs/shield": "^7.0.9",
+    "@adonisjs/view": "^6.1.3",
+    "kafkajs": "^1.16.0",
+    "luxon": "^2.3.1",
+    "pg": "^8.7.3",
+    "proxy-addr": "^2.0.7",
+    "reflect-metadata": "^0.1.13",
+    "source-map-support": "^0.5.21"
+  }
+}

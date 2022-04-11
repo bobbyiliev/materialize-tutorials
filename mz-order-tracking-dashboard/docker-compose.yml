@@ -1,0 +1,72 @@
+version: '3.7'
+services:
+  materialized:
+    image: materialize/materialized:v0.25.0
+    container_name: materialized
+    init: true
+    command: -w1 --disable-telemetry --experimental
+    ports:
+      - 6875:6875
+  mzcli:
+    image: materialize/cli
+    container_name: mzcli
+  redpanda:
+    image: docker.vectorized.io/vectorized/redpanda:v21.9.5
+    container_name: redpanda
+    command:
+     - redpanda start
+     - --overprovisioned
+     - --smp 1
+     - --memory 1G
+     - --reserve-memory 0M
+     - --node-id 0
+     - --check=false
+     - --kafka-addr 0.0.0.0:9092
+     - --advertise-kafka-addr redpanda:9092
+     - --pandaproxy-addr 0.0.0.0:8082
+     - --advertise-pandaproxy-addr redpanda:8082
+     - --set redpanda.enable_transactions=true
+     - --set redpanda.enable_idempotence=true
+    ports:
+     - 9092:9092
+     - 8081:8081
+     - 8082:8082
+  postgres:
+    build: ./postgres-image
+    container_name: postgres
+    ports:
+     - 5432:5432
+    environment:
+     - POSTGRES_USER=postgres
+     - POSTGRES_PASSWORD=postgres
+     - POSTGRES_DB=postgres
+    volumes:
+     - ${PWD}/postgres-image:/docker-entrypoint-initdb.d
+  metabase:
+    image: metabase/metabase
+    container_name: metabase
+    depends_on:
+       - materialized
+    ports:
+      - 3030:3000
+  tracking-app:
+    build: tracking-app
+    container_name: tracking-app
+    ports:
+     - 3333:3333
+    environment:
+     - DB_CONNECTION=pg
+     - PG_PORT=5432
+     - PG_USER=postgres
+     - PG_PASSWORD=postgres
+     - PG_HOST=postgres
+     - PG_DB_NAME=postgres
+     - PORT=3333
+     - HOST=0.0.0.0
+     - NODE_ENV=development
+     - APP_KEY=lQahGwZ8gHmRDBE1AzpZJAUM7rFUvAVS
+     - DRIVE_DISK=local
+     - SESSION_DRIVER=cookie
+     - CACHE_VIEWS=false
+    depends_on: [postgres]
+

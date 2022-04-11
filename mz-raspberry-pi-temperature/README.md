@@ -64,7 +64,7 @@ In this demo, we are going to use Materialize to:
 Clone the repository:
 
 ```
-git clone https://github.com/bobbyiliev/mz-raspberry-pi-temperature.git
+git clone https://github.com/bobbyiliev/materialize-tutorials.git
 ```
 
 Access the directory:
