@@ -1,0 +1,8 @@
+{
+    "name": "row",
+    "type": "record",
+    "fields": [
+      {"name": "a", "type": "long"},
+      {"name": "b", "type": "int"}
+    ]
+}
