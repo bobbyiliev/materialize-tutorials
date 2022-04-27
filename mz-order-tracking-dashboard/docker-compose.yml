@@ -1,7 +1,7 @@
 version: '3.7'
 services:
   materialized:
-    image: materialize/materialized:v0.25.0
+    image: materialize/materialized:v0.26.0
     container_name: materialized
     init: true
     command: -w1 --disable-telemetry --experimental
@@ -42,18 +42,12 @@ services:
      - POSTGRES_DB=postgres
     volumes:
      - ${PWD}/postgres-image:/docker-entrypoint-initdb.d
-  metabase:
-    image: metabase/metabase
-    container_name: metabase
-    depends_on:
-       - materialized
-    ports:
-      - 3030:3000
   tracking-app:
     build: tracking-app
     container_name: tracking-app
     ports:
      - 3333:3333
+    command: dumb-init node ace serve --watch --node-args="--inspect=0.0.0.0" --no-assets
     environment:
      - DB_CONNECTION=pg
      - PG_PORT=5432
@@ -68,5 +62,10 @@ services:
      - DRIVE_DISK=local
      - SESSION_DRIVER=cookie
      - CACHE_VIEWS=false
+     - MZ_HOST=materialized
+     - MZ_PORT=6875
+     - MZ_USER=materialize
+     - MZ_PASSWORD=materialize
+     - MZ_DB_NAME=materialize
     depends_on: [postgres]
 

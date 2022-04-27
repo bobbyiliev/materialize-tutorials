@@ -30,11 +30,12 @@ export default class OrdersController {
         // Then we declare a TAIL cursor
         await materialize.rawQuery('BEGIN');
         await materialize.rawQuery('DECLARE orders_c CURSOR FOR TAIL last_order_with_coordinates');
-        // Finally we use FETCH in a loop to retrieve each batch of results as soon as it is ready
+
         while (true) {
             const res = await materialize.rawQuery('FETCH ALL orders_c');
             response.response.write(`data: ${JSON.stringify(res.rows)}\n\n`)
         }
+
     }
 
     public async order({request, response}){
