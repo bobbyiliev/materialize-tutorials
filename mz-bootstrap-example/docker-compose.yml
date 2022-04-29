@@ -1,0 +1,50 @@
+services:
+  materialized:
+    image: materialize/materialized:v0.26.0
+    container_name: materialized
+    command: -w2 --log-filter debug
+    depends_on:
+      - redpanda
+    ports:
+      - 6875:6875
+    networks:
+      - monitoring
+    healthcheck: {test: curl -f localhost:6875, interval: 1s, start_period: 30s}
+    init: true
+  redpanda:
+    image: docker.vectorized.io/vectorized/redpanda:v21.10.1
+    container_name: redpanda
+    command:
+     - redpanda start
+     - --overprovisioned
+     - --smp 1
+     - --memory 1G
+     - --reserve-memory 0M
+     - --node-id 0
+     - --check=false
+     - --kafka-addr 0.0.0.0:9092
+     - --advertise-kafka-addr redpanda:9092
+     - --pandaproxy-addr 0.0.0.0:8082
+     - --advertise-pandaproxy-addr redpanda:8082
+     - --set redpanda.enable_transactions=true
+     - --set redpanda.enable_idempotence=true
+    ports:
+     - 9092:9092
+     - 8081:8081
+     - 8082:8082
+    networks:
+      - monitoring
+    healthcheck: {test: curl -f localhost:9644/v1/status/ready, interval: 1s, start_period: 30s}
+  boot:
+    image: materialize/cli:v0.26.0
+    container_name: boot
+    command: -f /mnt/mz_views.sql
+    depends_on:
+      materialized: { condition: service_healthy }
+      redpanda: { condition: service_healthy }
+    volumes: [.:/mnt]
+    networks:
+      - monitoring
+networks:
+  monitoring:
+    driver: bridge
