@@ -181,6 +181,8 @@ Finally, click on the "Run" button to run the action:
 
 ![Run an action](https://imgur.com/tOrXjIF.png)
 
+Alternatively, you can also set the rule to run automatically based on a specific time interval. The intervals supported by LogicLoop are: Minutes (1-30), Hours, Days, Weeks.
+
 Once you run the rule, you will get a notification for each time the rule is matched:
 
 ![Notification](https://imgur.com/yOcTMBm.png)
