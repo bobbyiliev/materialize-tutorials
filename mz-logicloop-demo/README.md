@@ -195,6 +195,8 @@ For more information on the above steps, please refer to the documentation:
 
 That's it! You can now use the materialized views in your LogicLoop account. This is a great way to get real-time data visualizations and notifications for your business.
 
+As a next step you can look into using [temporal filters](https://materialize.com/temporal-filters) so that your Materialize views are only keeping the data for a specific time period rather than the entire data set. And also run your LogicLoop rules on a schedule of 1 minute intervals to get the latest data from Materialize.
+
 ## Useful links
 
 - [Materialize documentation](https://materialize.com/docs/)
