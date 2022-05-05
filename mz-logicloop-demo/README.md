@@ -125,7 +125,7 @@ In there you can choose the type of action destination you want to create:
 
 ![LogicLoop destinations](https://imgur.com/I1eFPJM.png)
 
-For this demo, let's create an email action destination and set it to our email address.
+For the sake of simplicity, for this demo, let's create an email action destination and set it to our email address. However, you can also send emails to your end-facing customers as described in the [documentation here](https://docs.logicloop.com/actions/destinations/email).
 
 Once you have created the action destination, you can click on the "Save" button.
 
