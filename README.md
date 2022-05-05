@@ -15,6 +15,7 @@ Materialize is built upon [Timely Dataflow](https://github.com/TimelyDataflow/ti
 * [Learn Materialize by running streaming SQL on your nginx logs](./mz-nginx-logs)
 * [How to join MySQL and Postgres in a live materialized view](./mz-join-mysql-and-postgresql)
 * [Using Materialize and Airbyte with MySQL and Redpanda/Kafka](./mz-airbyte-demo)
+* [Using Materialize and LogicLoop](./mz-logicloop-demo)
 
 ### dbt
 
@@ -25,7 +26,7 @@ Materialize is built upon [Timely Dataflow](https://github.com/TimelyDataflow/ti
 
 * [Building a real-time web application with Materialize and AdonisJS](./mz-adonis-demo)
 * [Materialize - Raspberry Pi Temperature Sensors Demo](./mz-raspberry-pi-temperature)
-* [Materialize - App Shortener App with Upstash Serverless Redis and Kafak + Cloudflare Worker](https://github.com/bobbyiliev/cf-url-shortener)
+* [Materialize - App Shortener App with Upstash Serverless Redis and Kafka + Cloudflare Worker](https://github.com/bobbyiliev/cf-url-shortener)
 * [Materialize - Order Tracking Demo App with a live dashboard](./mz-order-tracking-dashboard/)
 * Coming soon: [Materialize and Postgres.js - PostgreSQL client for Node.js and Deno](./mz-deno-postgres-js)
 
@@ -47,7 +48,7 @@ Materialize is built upon [Timely Dataflow](https://github.com/TimelyDataflow/ti
 * [Official Materialize demos](https://materialize.com/docs/demos)
 * [Materialize white paper](https://materialize.com/resources/materialize-an-overview/)
 
-## Contrutions:
+## Contributions:
 
 Any contributions are welcome! If you notice a bug or have a feature request, please open an issue or pull request.
 
