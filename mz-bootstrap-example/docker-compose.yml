@@ -1,6 +1,6 @@
 services:
   materialized:
-    image: materialize/materialized:v0.26.0
+    image: materialize/materialized:v0.26.1
     container_name: materialized
     command: -w2 --log-filter debug
     depends_on:
