@@ -2,7 +2,7 @@
 
 ## Introduction
 
-This is a self-contained example of a real-time notifications app with Deno and [Materialize](https://materialize.com).
+This is a self-contained example of a real-time notification app with Deno, [Materialize](https://materialize.com) and Discord.
 
 [Deno](https://deno.land/) is a simple and secure runtime for JavaScript and TypeScript that uses V8. Deno, just like Materialize, is also written in Rust.
 
@@ -14,7 +14,7 @@ That way we can send real-time notifications to a Discord channel and take actio
 
 ## Overview
 
-Also, here is a quick diagram of the project:
+Here is a quick overview of the project:
 
 - A mock service to continually generate reviews and users.
 - Redpanda instance to store the reviews and users in topics.
@@ -361,6 +361,8 @@ As a next step, you can implement some error handling for the application so tha
 As a next step you can check out the Materialize + dbt + Redpanda demo which is based on the same user reviews mock data:
 
 > [Materialize + dbt + Redpanda demo](https://devdojo.com/bobbyiliev/how-to-use-dbt-with-materialize-and-redpanda)
+
+As an extra step for this tutorial, you can try using the [TrustPilot API](https://documentation-apidocumentation.trustpilot.com/) to get accurate ratings rather than the mock data.
 
 ## Helpful resources:
 
