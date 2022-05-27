@@ -137,7 +137,7 @@ This is more or less all the configuration that we have to do. Next, we can crea
 Let's use the default `hello.php` file that was automatically created for us when we ran the `doctl serverless init` command:
 
 ```
-materialize-php/packages/sample/hello/hello.php
+materialize-php/packages/materialize-php/hello/hello.php
 ```
 
 Edit the file and add the following contents:
