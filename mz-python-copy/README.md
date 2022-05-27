@@ -161,6 +161,12 @@ This is a simple example of how to copy the content of a Materialize view into a
 
 There are plans to add is something similar to Postgres's `COPY` command for exactly this purpose, but in the meantime, you can use this script to dump the data into a local file and upload it to S3.
 
+At the moment you can use `COPY` send the output to `STDOUT` example:
+
+```
+COPY (SELECT * FROM some_view) TO STDOUT;
+```
+
 ## Helpful resources:
 
 * [`CREATE SOURCE: PostgreSQL`](https://materialize.com/docs/sql/create-source/postgres?utm_source=bobbyiliev)
