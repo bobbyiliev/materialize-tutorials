@@ -1,0 +1,19 @@
+targetNamespace: ''
+parameters: {}
+environment:
+  env1: ${env1}
+packages:
+  - name: sample
+    environment: {}
+    parameters: {}
+    annotations: {}
+    actions:
+      - name: hello
+        binary: false
+        main: ''
+        runtime: 'nodejs:default'
+        web: true
+        parameters: {}
+        environment: {}
+        annotations: {}
+        limits: {}

@@ -1,0 +1,23 @@
+targetNamespace: ''
+parameters: {}
+environment:
+  MATERIALIZE_HOST: "${MATERIALIZE_HOST}"
+  MATERIALIZE_PORT: "${MATERIALIZE_PORT}"
+  MATERIALIZE_DB: "${MATERIALIZE_DB}"
+  MATERIALIZE_USER: "${MATERIALIZE_USER}"
+  MATERIALIZE_PASSWORD: "${MATERIALIZE_PASSWORD}"
+packages:
+  - name: materialize-php
+    environment: {}
+    parameters: {}
+    annotations: {}
+    actions:
+      - name: demo
+        binary: false
+        main: ''
+        runtime: 'php:default'
+        web: true
+        parameters: {}
+        environment: {}
+        annotations: {}
+        limits: {}
