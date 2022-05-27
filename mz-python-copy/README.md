@@ -1,4 +1,4 @@
-# Python Script to Copy The Content of a Materialize View
+# Python Script to Copy The Content of a Materialize View to S3
 
 ## Introduction
 

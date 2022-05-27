@@ -1,4 +1,4 @@
-# [Materialize](https://materialize.com) Tutorials
+# [Materialize](https://materialize.com?utm_source=bobbyiliev) Tutorials
 
 This is a collection of my personal Materialize demos and tutorials.
 
@@ -33,6 +33,7 @@ Materialize is built upon [Timely Dataflow](https://github.com/TimelyDataflow/ti
 ### Python / FastAPI
 
 * [Materialize + FastAPI Demo](./mz-fastapi-demo)
+* [Python Script to Copy The Content of a Materialize View to S3](./mz-python-copy/)
 
 ### PHP / Laravel
 
@@ -41,12 +42,12 @@ Materialize is built upon [Timely Dataflow](https://github.com/TimelyDataflow/ti
 
 ## Useful links
 
-* [Materialize Cloud](https://materialize.com/cloud)
-* [Official Materialize documentation](https://materialize.com/docs)
-* [Materialize GitHub repository](https://github.com/MaterializeInc/Materialize)
-* [Materialize website](https://materialize.com)
-* [Official Materialize demos](https://materialize.com/docs/demos)
-* [Materialize white paper](https://materialize.com/resources/materialize-an-overview/)
+* [Materialize Cloud](https://materialize.com/cloud?utm_source=bobbyiliev)
+* [Official Materialize documentation](https://materialize.com/docs?utm_source=bobbyiliev)
+* [Materialize GitHub repository](https://github.com/MaterializeInc/Materialize?utm_source=bobbyiliev)
+* [Materialize website](https://materialize.com?utm_source=bobbyiliev)
+* [Official Materialize demos](https://materialize.com/docs/demos?utm_source=bobbyiliev)
+* [Materialize white paper](https://materialize.com/resources/materialize-an-overview?utm_source=bobbyiliev)
 
 ## Contributions:
 
