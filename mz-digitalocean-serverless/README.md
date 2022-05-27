@@ -243,7 +243,7 @@ The new serverless functions allow you to quickly deploy your code without havin
 
 I am planning to add more examples of serverless functions with different languages. You will be able to find them at:
 
-> https://bobbyiliev/materialize-tutorials/mz-digitalocean-serverless
+> https://github.com/bobbyiliev/materialize-tutorials/tree/main/mz-digitalocean-serverless
 
 ## Helpful resources:
 
