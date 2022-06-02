@@ -1,0 +1,17 @@
+{
+    "name": "postgres-connector",
+    "config": {
+        "connector.class": "io.debezium.connector.postgresql.PostgresConnector",
+        "tasks.max": "1",
+        "plugin.name":"pgoutput",
+        "database.hostname": "postgres",
+        "database.port": "5432",
+        "database.user": "postgres",
+        "database.password": "postgres",
+        "database.dbname" : "postgres",
+        "database.server.name": "pg_repl",
+        "table.include.list": "shop.towns",
+        "publication.autocreate.mode":"filtered",
+        "value.converter.schemas.enable": false
+    }
+}
