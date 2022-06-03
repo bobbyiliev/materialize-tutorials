@@ -13,39 +13,48 @@ fi
 
 # Start time
 start_time=$(date)
+export PGPASSWORD="materialize"
+export MZ_HOST="localhost"
+export MZ_USER="materialize"
+export REDPANDA_HOST="redpanda"
+export POSTGRES_HOST="postgres"
+
 # Clear the views and sources
-psql -U materialize -h localhost -p 6875 -c "DROP VIEW IF EXISTS towns_view;"
-psql -U materialize -h localhost -p 6875 -c "DROP SOURCE IF EXISTS towns;"
-psql -U materialize -h localhost -p 6875 -c "DROP VIEW IF EXISTS towns_psql;"
-psql -U materialize -h localhost -p 6875 -c "DROP SOURCE IF EXISTS mz_source;"
+psql "postgres://${MZ_USER}@${MZ_HOST}:6875/materialize" -c "DROP VIEW IF EXISTS towns_count;"
+psql "postgres://${MZ_USER}@${MZ_HOST}:6875/materialize" -c "DROP VIEW IF EXISTS towns_view;"
+psql "postgres://${MZ_USER}@${MZ_HOST}:6875/materialize" -c "DROP SOURCE IF EXISTS towns;"
+psql "postgres://${MZ_USER}@${MZ_HOST}:6875/materialize" -c "DROP VIEW IF EXISTS towns_psql;"
+psql "postgres://${MZ_USER}@${MZ_HOST}:6875/materialize" -c "DROP SOURCE IF EXISTS mz_source;"
 
 # Function to check when records are ingested and equal to 10 million
 function postgres_check_ingestion {
-    psql -U materialize -h localhost -p 6875 -c "CREATE SOURCE "mz_source" FROM POSTGRES CONNECTION 'user=postgres port=5432 host=postgres dbname=postgres password=postgres' PUBLICATION 'mz_source';"
+    psql "postgres://${MZ_USER}@${MZ_HOST}:6875/materialize" -c "CREATE SOURCE "mz_source" FROM POSTGRES CONNECTION 'user=postgres port=5432 host=${POSTGRES_HOST} dbname=postgres password=postgres' PUBLICATION 'mz_source';"
     # Create the materialized view
-    psql -U materialize -h localhost -p 6875 -c "CREATE MATERIALIZED VIEWS FROM SOURCE mz_source (towns as towns_psql);"
+    psql "postgres://${MZ_USER}@${MZ_HOST}:6875/materialize" -c "CREATE MATERIALIZED VIEWS FROM SOURCE mz_source (towns as towns_psql);"
+    psql "postgres://${MZ_USER}@${MZ_HOST}:6875/materialize" -c "CREATE MATERIALIZED VIEW towns_count AS SELECT COUNT(*) FROM towns_psql;"
 
-    records=$(psql -U materialize -h localhost -p 6875 -t -c "SELECT COUNT(*) FROM towns_psql;" | grep -v "COUNT" | tr -d ' ')
+    records=$(psql -U "bobby\@materialize.com" -h ${MZ_HOST} -p psql "postgres://${MZ_USER}@${MZ_HOST}:6875/materialize" -t -c "SELECT * FROM towns_count;" | grep -v "COUNT" | tr -d ' ')
     # Check if the number of records is equal to 10 million
     while [ $records -lt 10000000 ]
     do
         sleep 1
-        records=$(psql -U materialize -h localhost -p 6875 -t -c "SELECT COUNT(*) FROM towns_psql;" | grep -v "COUNT" | tr -d ' ')
+        records=$(psql -U "bobby\@materialize.com" -h 4sqwpy4xpyjbb9q4vbi15cn3j.eu-west-1.aws.materialize.psql "postgres://${MZ_USER}@${MZ_HOST}:6875/materialize" -t -c "SELECT * FROM towns_count;" | grep -v "COUNT" | tr -d ' ')
     done
 }
 
 # Function to check when records are ingested and equal to 10 million
 function redpanda_check_ingestion {
-    psql -U materialize -h localhost -p 6875 -c "CREATE SOURCE towns FROM KAFKA BROKER 'redpanda:9092' TOPIC 'pg_repl.shop.towns' FORMAT AVRO USING CONFLUENT SCHEMA REGISTRY 'http://redpanda:8081' ENVELOPE DEBEZIUM;"
+    psql "postgres://${MZ_USER}@${MZ_HOST}:6875/materialize" -c "CREATE SOURCE towns FROM KAFKA BROKER '${REDPANDA_HOST}:9092' TOPIC 'pg_repl.shop.towns' FORMAT AVRO USING CONFLUENT SCHEMA REGISTRY 'http://${REDPANDA_HOST}:8081' ENVELOPE DEBEZIUM;"
     # Create the materialized view
-    psql -U materialize -h localhost -p 6875 -c "CREATE MATERIALIZED VIEW towns_view AS SELECT * FROM towns;"
+    psql "postgres://${MZ_USER}@${MZ_HOST}:6875/materialize" -c "CREATE MATERIALIZED VIEW towns_view AS SELECT * FROM towns;"
+    psql "postgres://${MZ_USER}@${MZ_HOST}:6875/materialize" -c "CREATE MATERIALIZED VIEW towns_count as SELECT COUNT(*) FROM towns_view;"
 
-    records=$(psql -U materialize -h localhost -p 6875 -t -c "SELECT COUNT(*) FROM towns_view;" | grep -v "COUNT" | tr -d ' ')
+    records=$(psql -U "bobby\@materialize.com" -h ${MZ_HOST} -p psql "postgres://${MZ_USER}@${MZ_HOST}:6875/materialize" -t -c "SELECT * FROM towns_count;" | grep -v "COUNT" | tr -d ' ')
     # Check if the number of records is equal to 10 million
     while [ $records -lt 10000000 ]
     do
         sleep 1
-        records=$(psql -U materialize -h localhost -p 6875 -t -c "SELECT COUNT(*) FROM towns_view;" | grep -v "COUNT" | tr -d ' ')
+        records=$(psql -U "bobby\@materialize.com" -h 4sqwpy4xpyjbb9q4vbi15cn3j.eu-west-1.aws.materialize.psql "postgres://${MZ_USER}@${MZ_HOST}:6875/materialize" -t -c "SELECT * FROM towns_count;" | grep -v "COUNT" | tr -d ' ')
     done
 }
 

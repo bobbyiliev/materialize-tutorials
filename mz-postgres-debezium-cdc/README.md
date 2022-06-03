@@ -6,7 +6,7 @@ The Postgres init script generates 10 million rows of data.
 
 ## Running the demo
 
-```
+```bash
 # Clone the repository:
 git clone https://github.com/bobbyiliev/materialize-tutorials.git
 
@@ -25,18 +25,23 @@ docker-compose up -d
 
 Give the services some time to start up, check the Debezium logs:
 
-```
+```bash
 docker-compose logs -f debezium
 ```
 
-> Note, initially it takes Debezium ~10 minutes to export the data to Kafka. Depending on the server resources, this can vary.
+> Note, initially it takes Debezium ~10 minutes to export the data to Kafka. Depending on the server resources, this can vary. The results below do not include the time it Debezium takes to export the data to Kafka.
 
 Once ready, run the test:
 
-```
-# For Direct Postgres:
+- For Direct Postgres:
+
+```bash
 bash test.sh postgres
-# For Redpanda/Kafka:
+```
+
+- For Redpanda/Kafka:
+
+```bash
 bash test.sh redpanda
 ```
 
@@ -45,28 +50,66 @@ bash test.sh redpanda
 Server details:
 - CPU: 4 vCPU
 - RAM: 8 GB
-- dataflow workers: 2
+- Local Materialize instance with 2 dataflow workers
 
 Postgres + Debezium + Redpanda:
 
-```
-real	8m28.391s
-user	0m5.014s
-sys	0m2.250s
+> Note, initially it takes Debezium ~10 minutes to export the data to Kafka. Depending on the server resources, this can vary. The results below do not include the time it Debezium takes to export the data to Kafka.
 
-Start time: Thu Jun  2 17:16:34 UTC 2022
-End time: Thu Jun  2 17:25:02 UTC 2022
+```bash
+real	2m24.147s
+user	0m0.425s
+sys	0m0.211s
+
+Start time: Fri Jun  3 14:48:41 UTC 2022
+End time: Fri Jun  3 14:51:06 UTC 2022
 ```
 
 Direct Postgres:
 
-```
-real	3m4.963s
-user	0m0.189s
-sys	0m0.127s
+```bash
+real	2m22.598s
+user	0m0.416s
+sys	0m0.187s
 
-Start time: Thu Jun  2 17:13:13 UTC 2022
-End time: Thu Jun  2 17:16:19 UTC 2022
+Start time: Fri Jun  3 14:26:27 UTC 2022
+End time: Fri Jun  3 14:28:50 UTC 2022
+```
+
+## Cloud Results
+
+Materialize Cluster size: `2xlarge`.
+Postgres and Redpanda running on: Ubuntu 20.04 4vCPU and 8GB RAM.
+
+```sql
+materialize=> select mz_version();
+       mz_version
+-------------------------
+ v0.26.1-dev (5715fb31f)
+```
+
+Postgres + Debezium + Redpanda:
+
+> Note, initially it takes Debezium ~10 minutes to export the data to Kafka. Depending on the server resources, this can vary. The results below do not include the time it Debezium takes to export the data to Kafka.
+
+```bash
+real	1m36.421s
+user	0m4.503s
+sys	0m1.949s
+
+Start time: Fri Jun  3 14:46:00 UTC 2022
+End time: Fri Jun  3 14:47:39 UTC 2022
+```
+
+Direct Postgres:
+
+```bash
+real	1m32.185s
+user	0m3.402s
+sys	0m1.355s
+
+Start time: Fri Jun  3 14:34:55 UTC 2022
+End time: Fri Jun  3 14:36:29 UTC 2022
 ```
 
 ## Helpful resources:
