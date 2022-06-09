@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Realtime Graph</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body>
+
+    <section class="relative py-2 bg-gradient-to-br from-purple-600 via-indigo-00 to-blue-500">
+        <div class="flex items-center justify-between h-20 px-8 mx-auto max-w-7xl">
+
+            <a href="https://materialize.com?utm_source=bobbyiliev" class="relative z-10 flex items-center w-auto text-2xl font-extrabold leading-none text-white select-none">
+                Materialize
+            </a>
+
+            <nav class="items-center justify-center hidden space-x-8 text-gray-200 md:flex">
+                <a href="https://materialize.com/docs?utm_source=bobbyiliev" x-data="{ hover: false }" @mouseenter="hover = true" @mouseleave="hover = false" class="relative inline-block text-sm font-bold text-gray-200 uppercase transition duration-150 lg:text-base ease hover:text-white">
+                    <span class="block">Docs</span>
+                </a>
+                <a href="https://materialize.com/cloud?utm_source=bobbyiliev" x-data="{ hover: false }" @mouseenter="hover = true" @mouseleave="hover = false" class="relative inline-block text-sm font-bold text-gray-200 uppercase transition duration-150 lg:text-base ease hover:text-white">
+                    <span class="block">Cloud</span>
+                </a>
+                <a href="https://github.com/MaterializeInc" x-data="{ hover: false }" @mouseenter="hover = true" @mouseleave="hover = false" class="relative inline-block text-sm font-bold text-gray-200 uppercase transition duration-150 lg:text-base ease hover:text-white">
+                    <span class="block">GitHub</span>
+                </a>
+                <a href="https://materialize.com/blog?utm_source=bobbyiliev" x-data="{ hover: false }" @mouseenter="hover = true" @mouseleave="hover = false" class="relative inline-block text-sm font-bold text-gray-200 uppercase transition duration-150 lg:text-base ease hover:text-white">
+                    <span class="block">Blog</span>
+                </a>
+                <div class="w-0 h-5 border border-r border-blue-700"></div>
+                <a href="https://github.com/MaterializeInc/demos" x-data="{ hover: false }" @mouseenter="hover = true" @mouseleave="hover = false" class="relative inline-block ml-5 text-base font-bold text-gray-200 uppercase transition duration-150 ease hover:text-white">
+                    <span class="block">Demos</span>
+                </a>
+            </nav>
+
+            <!-- Mobile Button -->
+            <div class="flex items-center justify-center h-full text-white md:hidden">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 8h16M4 16h16"></path>
+                </svg>
+            </div>
+
+        </div>
+    </section>
+
+    <section class="w-full py-16 overflow-hidden bg-white relative">
+        <div class="w-1/2 h-full bg-gray-50 md:block hidden absolute transform -translate-x-64 left-0 top-0"></div>
+        <div class="w-1/2 h-full bg-gray-50 md:block hidden absolute transform -translate-x-24 -skew-x-[30deg] -skew-x-12 left-0 top-0"></div>
+        <div class="max-w-6xl relative mx-auto flex sm:px-0 px-10 flex-col items-start sm:items-center justify-center">
+
+            <h2 class="text-gray-900 text-2xl font-bold">Live dashboard</h2>
+            <p class="text-gray-600 text-lg text-left sm:text-center mt-5">A live chart built with Deno + Web Sockets + Chart.js + Materialize</p>
+            <a href="https://github.com/bobbyiliev/materialize-tutorials/" class="text-indigo-500 font-bold text-lg mt-5 flex items-center group">
+                <span>Learn More</span>
+                <svg class="w-5 h-5 group-hover:ml-1 transition-all ease-out duration-200" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd"></path></svg>
+            </a>
+
+            <div class="w-full mt-10">
+                <canvas id="myChart"></canvas>
+            </div>
+
+        </div>
+    </section>
+
+    <section class="py-10 bg-black">
+        <div class="px-10 mx-auto max-w-7xl">
+            <div class="flex flex-col items-center md:flex-row md:justify-between">
+                <a href="https://devdojo.com/tails?ref=bobbyiliev" class="flex items-center justify-center w-10 h-10 mr-3 rounded-lg mb-7 bg-gradient-to-br from-purple-500 via-indigo-600 to-blue-500 rounded-xxl">
+                    <svg class="w-5 h-5 text-white fill-current" viewBox="0 0 39 15" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M11.252 1.152C4.184 2.526.454 6.918.061 14.329c1.963-4.049 4.798-5.975 8.503-5.778 2.115.112 3.84 1.295 5.75 2.603 3.11 2.133 6.712 4.601 13.281 3.324 7.068-1.374 10.798-5.766 11.191-13.177-1.963 4.049-4.798 5.975-8.503 5.779-2.115-.113-3.84-1.296-5.75-2.604-3.11-2.133-6.712-4.601-13.281-3.324z" fill-rule="evenodd"></path>
+                    </svg>
+                </a>
+            </div>
+            <div class="flex flex-col justify-between text-center md:flex-row">
+                <p class="order-last text-sm leading-tight text-gray-500 md:order-first"> Crafted with <a href="https://devdojo.com/tails?ref=bobbyiliev" class="text-white">Tails</a>.</p>
+                <ul class="flex flex-row justify-center pb-3 -ml-4 -mr-4 text-sm">
+                    <li> <a href="https://materialize.com/contact?utm_source=bobbyiliev" class="px-4 text-gray-500 hover:text-white">Contact</a> </li>
+                    <li> <a href="https://materialize.com/about?utm_source=bobbyiliev" class="px-4 text-gray-500 hover:text-white">About US</a> </li>
+                    <li> <a href="https://materialize.com/resources?utm_source=bobbyiliev" class="px-4 text-gray-500 hover:text-white">Resources</a></li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <script>
+      const ctx = document.getElementById("myChart");
+      const myChart = new Chart(ctx, {
+        type: "bar",
+        data: {
+          labels: [ "Player 1", "Player 2", "Player 3", "Player 4", "Player 5", "Player 6" ],
+          datasets: [
+            {
+              label: "# of points",
+              data: [0, 0, 0, 0, 0, 0],
+              backgroundColor: [
+                "rgba(255, 99, 132, 0.2)",
+                "rgba(54, 162, 235, 0.2)",
+                "rgba(255, 206, 86, 0.2)",
+                "rgba(75, 192, 192, 0.2)",
+                "rgba(153, 102, 255, 0.2)",
+                "rgba(255, 159, 64, 0.2)",
+              ],
+              borderColor: [
+                "rgba(255, 99, 132, 1)",
+                "rgba(54, 162, 235, 1)",
+                "rgba(255, 206, 86, 1)",
+                "rgba(75, 192, 192, 1)",
+                "rgba(153, 102, 255, 1)",
+                "rgba(255, 159, 64, 1)",
+              ],
+              borderWidth: 1,
+            },
+          ],
+        },
+        options: {
+          scales: {
+            y: {
+              beginAtZero: true,
+            },
+          },
+        },
+      });
+
+      webSocket = new WebSocket("ws://127.0.0.1:8080");
+      webSocket.onmessage = function (message) {
+        const data = message.data;
+        const dataObj = JSON.parse(data);
+        // To array
+        const dataArray = Object.values(dataObj);
+        console.log(dataArray);
+        // User id to array index
+        index = dataArray[0] - 1;
+        myChart.data.datasets[0].data[index] = dataArray[1];
+        myChart.update();
+      };
+    </script>
+  </body>
+</html>
