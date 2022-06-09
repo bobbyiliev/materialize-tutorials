@@ -61,7 +61,7 @@ After that, you can visit `http://localhost` in your browser to see the demo:
 
 ![Deno websockets and chart.js](https://user-images.githubusercontent.com/21223421/172840971-8e1091ac-8ec9-4773-b414-b1e858b0c278.gif)
 
-Next, let's review the Materialize setup.
+Next, let's review the Materialize setup and the Deno backend setup.
 
 ## Materialize setup
 
@@ -159,7 +159,7 @@ We would use two Deno modules:
 - The Postgres module to connect to Materialize.
 - The Web Sockets module to create a Web Socket connection to our Frontend service.
 
-You can find the code in the [`backend` directory]().
+You can find the code in the [`backend` directory](https://github.com/bobbyiliev/materialize-tutorials/tree/main/mz-deno-live-dashboard/backend).
 
 ```ts
 import { WebSocketClient, WebSocketServer } from "https://deno.land/x/websocket@v0.1.4/mod.ts";
@@ -288,7 +288,7 @@ Rundown of the code:
 - Then we create a new `WebSocket` instance and pass it the URL of the Web Socket server with `webSocket = new WebSocket("ws://backend:8080");`
 - Finally, we define an `onmessage` event handler on the `WebSocket` instance, which is called when a message is received and updates the chart.
 
-You can find the code in the [`frontend` directory]().
+You can find the code in the [`frontend` directory](https://github.com/bobbyiliev/materialize-tutorials/tree/main/mz-deno-live-dashboard/frontend).
 
 ## Conclusion
 
@@ -297,7 +297,6 @@ You can leave the Deno application running so that it would be subscribed to the
 As a next step you can check out the Materialize + dbt + Redpanda demo which is based on the same user reviews mock data:
 
 > [Materialize + dbt + Redpanda demo](https://devdojo.com/bobbyiliev/how-to-use-dbt-with-materialize-and-redpanda)
-
 
 ## Helpful resources:
 
