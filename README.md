@@ -23,13 +23,14 @@ Materialize is built upon [Timely Dataflow](https://github.com/TimelyDataflow/ti
 * [Materialize + dbt: User Reviews Demo](./mz-user-reviews-dbt-demo)
 * How to create abandoned cart alerts with Materialize
 
-### Node.js / Adonis.js
+### Node.js / Adonis.js / Deno
 
 * [Building a real-time web application with Materialize and AdonisJS](./mz-adonis-demo)
 * [Materialize - Raspberry Pi Temperature Sensors Demo](./mz-raspberry-pi-temperature)
 * [Materialize - App Shortener App with Upstash Serverless Redis and Kafka + Cloudflare Worker](https://github.com/bobbyiliev/cf-url-shortener)
 * [Materialize - Order Tracking Demo App with a live dashboard](./mz-order-tracking-dashboard/)
 * [Using Deno and Materialize to send notifications in real-time](./mz-deno-discord-live-notifications)
+* [Using WebSockets with Deno Chart.js and Materialize to build real-time charts](./mz-deno-live-dashboard/)
 * Coming soon: [Materialize and Postgres.js - PostgreSQL client for Node.js and Deno](./mz-deno-postgres-js)
 
 ### Python / FastAPI
