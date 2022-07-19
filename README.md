@@ -31,6 +31,7 @@ Materialize is built upon [Timely Dataflow](https://github.com/TimelyDataflow/ti
 * [Materialize - Order Tracking Demo App with a live dashboard](./mz-order-tracking-dashboard/)
 * [Using Deno and Materialize to send notifications in real-time](./mz-deno-discord-live-notifications)
 * [Using WebSockets with Deno Chart.js and Materialize to build real-time charts](./mz-deno-live-dashboard/)
+* [Snake Game - Event Streaming and Materialize](https://github.com/bobbyiliev/snake-game-event-streaming)
 * Coming soon: [Materialize and Postgres.js - PostgreSQL client for Node.js and Deno](./mz-deno-postgres-js)
 
 ### Python / FastAPI
