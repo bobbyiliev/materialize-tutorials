@@ -109,7 +109,7 @@ services:
       - eventstream
 
   materialized:
-    image: materialize/materialized:v0.26.1
+    image: materialize/materialized:v0.26.4
     container_name: materialized
     init: true
     command: -w1 --disable-telemetry --experimental
