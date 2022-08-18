@@ -1,0 +1,24 @@
+services:
+  materialized:
+    image: materialize/materialized:v0.26.4
+    container_name: materialized
+    command: -w2 --log-filter debug
+    volumes: [.:/mnt]
+    ports:
+      - 6875:6875
+    networks:
+      - monitoring
+    healthcheck: {test: curl -f localhost:6875, interval: 1s, start_period: 30s}
+    init: true
+  boot:
+    image: materialize/cli:v0.26.0
+    container_name: boot
+    command: -f /mnt/boot.sql
+    depends_on:
+      materialized: { condition: service_healthy }
+    volumes: [.:/mnt]
+    networks:
+      - monitoring
+networks:
+  monitoring:
+    driver: bridge
