@@ -1,3 +1,5 @@
+> :warning: **This branch includes examples for an unsupported version of [Materialize (0.26.x)](https://materialize.com/docs/lts).**
+
 # [Materialize](https://materialize.com?utm_source=bobbyiliev) Tutorials
 
 This is a collection of my personal Materialize demos and tutorials.
@@ -9,6 +11,8 @@ Materialize is built upon [Timely Dataflow](https://github.com/TimelyDataflow/ti
 ![Materialize Tutorials](https://user-images.githubusercontent.com/21223421/144993631-8234a2e5-d7ef-47e8-af86-30b0fb1205d2.png)
 
 ---
+
+> :warning: **This branch includes examples for an unsupported version of [Materialize (0.26.x)](https://materialize.com/docs/lts).**
 
 ## Tutorials list
 
