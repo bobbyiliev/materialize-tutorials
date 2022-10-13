@@ -1,4 +1,4 @@
-> :warning: **This branch includes examples for an unsupported version of Materialize (0.26.x).**
+> :warning: **This branch includes examples for an unsupported version of [Materialize (0.26.x)](https://materialize.com/docs/lts).**
 
 # [Materialize](https://materialize.com?utm_source=bobbyiliev) Tutorials
 
@@ -12,7 +12,7 @@ Materialize is built upon [Timely Dataflow](https://github.com/TimelyDataflow/ti
 
 ---
 
-> :warning: **This branch includes examples for an unsupported version of Materialize (0.26.x).**
+> :warning: **This branch includes examples for an unsupported version of [Materialize (0.26.x)](https://materialize.com/docs/lts).**
 
 ## Tutorials list
 
