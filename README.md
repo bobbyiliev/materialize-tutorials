@@ -56,6 +56,7 @@ Materialize is built upon [Timely Dataflow](https://github.com/TimelyDataflow/ti
 * [Materialize website](https://materialize.com?utm_source=bobbyiliev)
 * [Official Materialize demos](https://materialize.com/docs/demos?utm_source=bobbyiliev)
 * [Materialize white paper](https://materialize.com/resources/materialize-an-overview?utm_source=bobbyiliev)
+* [Learn SQL in Detail](https://www.scaler.com/topics/sql/)
 
 ## Contributions:
 
