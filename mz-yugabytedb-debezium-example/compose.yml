@@ -1,0 +1,101 @@
+---
+version: "3.9"
+volumes:
+  yb-master-data-1:
+  yb-tserver-data-1:
+
+services:
+
+  materialized:
+    image: materialize/materialized:latest
+    container_name: materialized
+    ports:
+      - 6875:6875
+      - 6878:6878
+    healthcheck: {test: curl -f localhost:6878/api/readyz, interval: 1s, start_period: 35s}
+
+  redpanda:
+    image: docker.vectorized.io/vectorized/redpanda:v21.11.2
+    command:
+      - redpanda start
+      - --overprovisioned
+      - --smp 1
+      - --memory 1G
+      - --reserve-memory 0M
+      - --node-id 0
+      - --check=false
+      - --kafka-addr 0.0.0.0:9092
+      - --advertise-kafka-addr ${EXTERNAL_IP:-redpanda}:9092
+      - --pandaproxy-addr 0.0.0.0:8082
+      - --advertise-pandaproxy-addr ${EXTERNAL_IP:-redpanda}:8082
+      - --set redpanda.enable_transactions=true
+      - --set redpanda.enable_idempotence=true
+      - --set redpanda.auto_create_topics_enabled=true
+      - --set redpanda.default_topic_partitions=1
+    ports:
+      - 9092:9092
+      - 8081:8081
+      - 8082:8082
+    healthcheck: {test: curl -f localhost:9644/v1/status/ready, interval: 1s, start_period: 30s}
+
+  connect:
+    image: quay.io/yugabyte/debezium-connector:latest
+    container_name: connect
+    environment:
+      - BOOTSTRAP_SERVERS=redpanda:9092
+      - GROUP_ID=1
+      - CONFIG_STORAGE_TOPIC=my_connect_configs
+      - OFFSET_STORAGE_TOPIC=my_connect_offsets
+      - STATUS_STORAGE_TOPIC=my_connect_statuses
+      - KEY_CONVERTER=io.confluent.connect.avro.AvroConverter
+      - VALUE_CONVERTER=io.confluent.connect.avro.AvroConverter
+      - CONNECT_KEY_CONVERTER_SCHEMA_REGISTRY_URL=http://redpanda:8081
+      - CONNECT_VALUE_CONVERTER_SCHEMA_REGISTRY_URL=http://redpanda:8081
+    ports:
+      - "8083:8083"
+
+  yb-master:
+      image: yugabytedb/yugabyte:latest
+      container_name: yb-master-n1
+      volumes:
+      - yb-master-data-1:/mnt/master
+      command: [ "/home/yugabyte/bin/yb-master",
+                "--fs_data_dirs=/mnt/master",
+                "--master_addresses=yb-master-n1:7100",
+                "--rpc_bind_addresses=yb-master-n1:7100",
+                "--replication_factor=1"]
+      ports:
+      - "7000:7000"
+      - "7100:7100"
+      environment:
+        SERVICE_7000_NAME: yb-master
+
+  yb-tserver:
+      image: yugabytedb/yugabyte:latest
+      container_name: yb-tserver-n1
+      volumes:
+      - yb-tserver-data-1:/mnt/tserver
+      command: [ "/home/yugabyte/bin/yb-tserver",
+                "--fs_data_dirs=/mnt/tserver",
+                "--start_pgsql_proxy",
+                "--rpc_bind_addresses=yb-tserver-n1:9100",
+                "--tserver_master_addrs=yb-master-n1:7100"
+                ]
+      ports:
+      - "9042:9042"
+      - "5433:5433"
+      - "9000:9000"
+      environment:
+        SERVICE_5433_NAME: ysql
+        SERVICE_9042_NAME: ycql
+        SERVICE_6379_NAME: yedis
+        SERVICE_9000_NAME: yb-tserver
+      depends_on:
+      - yb-master
+
+  yb-client:
+      image: yugabytedb/yb-sample-apps:latest
+      container_name: yb-client-n1
+      command: [ "--workload", "SqlInserts", "--nodes", "yb-tserver-n1:5433" ]
+      depends_on:
+      - yb-tserver
