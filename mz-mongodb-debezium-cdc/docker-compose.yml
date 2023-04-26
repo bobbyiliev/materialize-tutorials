@@ -1,0 +1,53 @@
+version: '2'
+services:
+  materialized:
+    image: materialize/materialized:latest
+    container_name: materialized
+    ports:
+      - 6875:6875
+      - 6878:6878
+    healthcheck: {test: curl -f localhost:6878/api/readyz, interval: 1s, start_period: 35s}
+  redpanda:
+    image: docker.vectorized.io/vectorized/redpanda:v21.11.2
+    ports:
+      - 9092:9092
+      - 8081:8081
+    command:
+      - redpanda start
+      - --overprovisioned
+      - --smp 1
+      - --memory 1G
+      - --reserve-memory 0M
+      - --node-id 0
+      - --check=false
+      - --kafka-addr 0.0.0.0:9092
+      - --advertise-kafka-addr ${EXTERNAL_IP:-redpanda}:9092
+      - --pandaproxy-addr 0.0.0.0:8082
+      - --advertise-pandaproxy-addr ${EXTERNAL_IP:-redpanda}:8082
+      - --set redpanda.enable_transactions=true
+      - --set redpanda.enable_idempotence=true
+  mongodb:
+    image: quay.io/debezium/example-mongodb:1.9
+    hostname: mongodb
+    ports:
+     - 27017:27017
+    environment:
+     - MONGODB_USER=debezium
+     - MONGODB_PASSWORD=dbz
+  connect:
+    image: quay.io/debezium/connect:1.9
+    ports:
+     - 8083:8083
+    links:
+     - redpanda
+     - mongodb
+    environment:
+     - BOOTSTRAP_SERVERS=redpanda:9092
+     - GROUP_ID=1
+     - CONFIG_STORAGE_TOPIC=my_connect_configs
+     - OFFSET_STORAGE_TOPIC=my_connect_offsets
+     - STATUS_STORAGE_TOPIC=my_connect_statuses
+     - KEY_CONVERTER=io.confluent.connect.avro.AvroConverter
+     - VALUE_CONVERTER=io.confluent.connect.avro.AvroConverter
+     - CONNECT_KEY_CONVERTER_SCHEMA_REGISTRY_URL=http://redpanda:8081
+     - CONNECT_VALUE_CONVERTER_SCHEMA_REGISTRY_URL=http://redpanda:8081
