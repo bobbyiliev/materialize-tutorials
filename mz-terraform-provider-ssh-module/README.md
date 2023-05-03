@@ -1,6 +1,6 @@
 # Materialize Terraform Provider + Materialize Module for EC2 SSH Bastion
 
-This is an example of how to use the [Materialize Terraform Provider](https://github.com/MaterializeInc/terraform-provider-materialize) to manage your Materialize resources like [connections](https://materialize.com/docs/sql/create-connection/), [sources](https://materialize.com/docs/sql/create-source/), and [clusters](https://materialize.com/docs/sql/create-cluster/) alongside the [Materialize Module EC2 SSH Bastion](https://github.com/bobbyiliev/terraform-materialize-ec2-ssh-bastion).
+This is an example of how to use the [Materialize Terraform Provider](https://github.com/MaterializeInc/terraform-provider-materialize) to manage your Materialize resources like [connections](https://materialize.com/docs/sql/create-connection/), [sources](https://materialize.com/docs/sql/create-source/), and [clusters](https://materialize.com/docs/sql/create-cluster/) alongside the [Materialize Module EC2 SSH Bastion](https://github.com/MaterializeInc/terraform-aws-ec2-ssh-bastion).
 
 The end result is an EC2 SSH Bastion host in your AWS account and an SSH connection in Materialize that you can use to connect to your sources.
 
@@ -67,7 +67,8 @@ Use the Materialize EC2 SSH Bastion module to create an EC2 instance that can be
 
 ```hcl
 module "ssh_bastion" {
-  source = "git::https://github.com/bobbyiliev/terraform-materialize-ec2-ssh-bastion.git?ref=main"
+  source  = "MaterializeInc/ec2-ssh-bastion/aws"
+  version = "0.1.0"
 
   aws_region     = local.aws_region
   mz_egress_ips  = local.mz_egress_ips

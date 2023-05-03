@@ -28,7 +28,8 @@ provider "materialize" {
 
 # Use the materialize ssh module
 module "ssh_bastion" {
-  source = "git::https://github.com/bobbyiliev/terraform-materialize-ec2-ssh-bastion.git?ref=main"
+  source  = "MaterializeInc/ec2-ssh-bastion/aws"
+  version = "0.1.0"
 
   aws_region     = local.aws_region
   mz_egress_ips  = local.mz_egress_ips
