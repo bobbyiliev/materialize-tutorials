@@ -3,7 +3,7 @@
 # Variables
 SECRET="some-secret-value" # The shared secret used to generate the HMAC signature
 NAME="raspberry" # The name of the device
-URL="https://4dofcj3e2j1r5zve6cle2olh9.us-east-1.aws.staging.materialize.cloud/api/webhook/materialize/public/my_webhook_source" # The URL of the webhook source
+URL="https://<HOST>.materialize.cloud/api/webhook/materialize/public/my_webhook_source" # The URL of the webhook source
 
 
 # Generate a random temperature number

@@ -148,7 +148,7 @@ This script leverages HMAC for authentication and constructs the JSON payloads a
 
 Let's create a view to cast the JSON payloads into columns with the correct data types:
 
-```
+```sql
 CREATE VIEW sensors_data AS SELECT
     (body->>'device')::text AS "device",
     (body->>'timestamp')::timestamp AS "timestamp",
@@ -158,7 +158,7 @@ CREATE VIEW sensors_data AS SELECT
 
 After that we can create a materialized view to compute real-time analytics on the IoT data in the last 5 minutes:
 
-```
+```sql
 CREATE MATERIALIZED VIEW sensors_data_5m AS SELECT
     device,
     timestamp,
@@ -180,7 +180,7 @@ To subscribe to the `sensors_data_5m` materialized view, we can use the `SUBSCRI
 
 ```sql
 COPY (
-    SUBSCRIBE TO sensors_data_5m 
+    SUBSCRIBE TO sensors_data_5m
     WITH (SNAPSHOT = FALSE)
 ) TO STDOUT;
 ```
