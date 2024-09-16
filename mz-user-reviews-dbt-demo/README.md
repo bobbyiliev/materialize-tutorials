@@ -1,5 +1,8 @@
 # How to use dbt with Materialize
 
+> [!WARNING]
+> This demo includes examples for an unsupported version of [Materialize (0.26.x)](https://materialize.com/docs/lts/).
+
 This is a self-contained demo using [Materialize](https://materialize.com/).
 
 This demo shows you how to use [dbt](https://docs.getdbt.com/docs/introduction) together with Materialize.
@@ -37,16 +40,18 @@ As shown in the diagram above, we will have the following components:
 
 ## Running the demo
 
-First, start by cloning the repository:
+First, start by cloning the repository and switching to the `lts` branch:
 
 ```
 git clone https://github.com/bobbyiliev/materialize-tutorials.git
+cd materialize-tutorials
+git checkout lts
 ```
 
 After that, you can access the directory:
 
 ```
-cd materialize-tutorials/mz-user-reviews-dbt-demo
+cd mz-user-reviews-dbt-demo
 ```
 
 Let's start by running the Redpanda container:

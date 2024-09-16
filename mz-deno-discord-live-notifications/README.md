@@ -1,5 +1,8 @@
 # Using Deno and Materialize to send notifications in real-time
 
+> [!WARNING]
+> This demo includes examples for an unsupported version of [Materialize (0.26.x)](https://materialize.com/docs/lts/).
+
 ## Introduction
 
 This is a self-contained example of a real-time notification app with Deno, [Materialize](https://materialize.com) and Discord.
@@ -37,16 +40,18 @@ Optionally, if you want to use the Discord webhook integration, you need to crea
 
 ## Running the demo
 
-To get started, clone the repository:
+To get started, clone the repository and switch to the `lts` branch:
 
 ```
-git clone git clone https://github.com/bobbyiliev/materialize-tutorials.git
+git clone https://github.com/bobbyiliev/materialize-tutorials.git
+cd materialize-tutorials
+git checkout lts
 ```
 
-Then you can access the directory:
+Then you can access the demo directory:
 
 ```
-cd materialize-tutorials/mz-deno-discord-live-notifications
+cd mz-deno-discord-live-notifications
 ```
 
 With that you can then build the images:

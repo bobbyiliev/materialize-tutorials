@@ -1,5 +1,8 @@
 # FastAPI and Materialize Demo
 
+> [!WARNING]
+> This demo includes examples for an unsupported version of [Materialize (0.26.x)](https://materialize.com/docs/lts/).
+
 This is a self-contained demo of FastAPI and [Materialize](https://materialize.com).
 
 This demo project contains the following components:
@@ -15,10 +18,12 @@ This demo project contains the following components:
 
 ## Running the demo
 
-Clone the repository:
+Clone the repository and switch to the `lts` branch:
 
 ```shell
 git clone https://github.com/bobbyiliev/materialize-tutorials.git
+cd materialize-tutorials
+git checkout lts
 ```
 
 Access the FastAPI demo project directory:

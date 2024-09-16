@@ -1,5 +1,8 @@
 # Materialize Avro File Sources Example
 
+> [!WARNING]
+> This demo includes examples for an unsupported version of [Materialize (0.26.x)](https://materialize.com/docs/lts/).
+
 Materialize supports Avro files as a source.
 
 https://materialize.com/docs/sql/create-source/file/

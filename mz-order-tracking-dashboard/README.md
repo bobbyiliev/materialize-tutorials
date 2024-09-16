@@ -1,7 +1,9 @@
 ## Order Tracking Demo App - Materialize
 
-This is a self-contained demo using [Materialize](https://materialize.com/) to process orders and display the delivery status and coordinates in real-time.
+> [!WARNING]
+> This demo includes examples for an unsupported version of [Materialize (0.26.x)](https://materialize.com/docs/lts/).
 
+This is a self-contained demo using [Materialize](https://materialize.com/) to process orders and display the delivery status and coordinates in real-time.
 
 ## Prerequisites
 
@@ -18,13 +20,15 @@ You can follow the steps here on how to install Docker:
 
 ## Running the Demo
 
-Clone the repository and run the following command:
+Clone the repository and switch to the `lts` branch:
 
 ```bash
 git clone https://github.com/bobbyiliev/materialize-tutorials.git
+cd materialize-tutorials
+git checkout lts
 ```
 
-Then access the `mz-order-tracking-dashboard` directory and run the following command:
+Then access the `mz-order-tracking-dashboard` directory:
 
 ```bash
 cd mz-order-tracking-dashboard

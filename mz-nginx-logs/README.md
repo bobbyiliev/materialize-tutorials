@@ -9,6 +9,9 @@ status: draft
 
 # Introduction 
 
+> [!WARNING]
+> This demo includes examples for an unsupported version of [Materialize (0.26.x)](https://materialize.com/docs/lts/).
+
 In this tutorial, I will show you how [Materialize](https://materialize.com) works by using it to run SQL queries on continuously produced nginx logs. By the end of the tutorial, you will have a better idea of what Materialize is, how it's different than other SQL engines, and how to use it.
 
 # Prerequisites

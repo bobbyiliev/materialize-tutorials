@@ -10,6 +10,9 @@ status: draft
 
 # Introduction
 
+> [!WARNING]
+> This demo includes examples for an unsupported version of [Materialize (0.26.x)](https://materialize.com/docs/lts/).
+
 In this tutorial, we are going to build a web application using [AdonisJS](https://adonisjs.com/) and integrate it with [Materialize](https://materialize.com) to create a real-time dashboard based on streaming data using standard SQL.
 
 Materialize lets you define views you want to maintain on your data, just as you would with any SQL table, and then get the results in real-time, unlike traditional databases which frequently act as if they've never been asked that question before.

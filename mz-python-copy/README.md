@@ -1,5 +1,8 @@
 # Python Script to Copy The Content of a Materialize View to S3
 
+> [!WARNING]
+> This demo includes examples for an unsupported version of [Materialize (0.26.x)](https://materialize.com/docs/lts/).
+
 ## Introduction
 
 [Materialize](https://materialize.com?utm_source=bobbyiliev) is a streaming database for real-time analytics. It was launched in 2019 to address the growing need for the ability to build real-time applications easily and efficiently on streaming data so that businesses can obtain actionable intelligence from streaming data.

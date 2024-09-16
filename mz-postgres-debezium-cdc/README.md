@@ -1,5 +1,8 @@
 # Materialize: Test ingestion of Postgres Debezium CDC vs Direct Postgres
 
+> [!WARNING]
+> This demo includes examples for an unsupported version of [Materialize (0.26.x)](https://materialize.com/docs/lts/).
+
 This is a quick test to compare the ingestion of Postgres Debezium CDC vs Direct Postgres.
 
 The Postgres init script generates 10 million rows of data.
@@ -9,9 +12,11 @@ The Postgres init script generates 10 million rows of data.
 ```bash
 # Clone the repository:
 git clone https://github.com/bobbyiliev/materialize-tutorials.git
+cd materialize-tutorials
+git checkout lts
 
 # Access the directory:
-cd materialize-tutorials/mz-postgres-debezium-cdc
+cd mz-postgres-debezium-cdc
 
 # Build the images:
 docker-compose build

@@ -1,5 +1,8 @@
 # Materialize Binary + Redpanda Cloud
 
+> [!WARNING]
+> This demo includes examples for an unsupported version of [Materialize (0.26.x)](https://materialize.com/docs/lts/).
+
 - Download your Redpanda CA certificate
 - Store the CA certificate same directory as the `docker-compose.yml` file and name the certificate file `ca.crt`
 - Update the details in the `boot.sql` file to match your environment:

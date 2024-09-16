@@ -1,5 +1,8 @@
 # Redpanda + Materialize Demo
 
+> [!WARNING]
+> This demo includes examples for an unsupported version of [Materialize (0.26.x)](https://materialize.com/docs/lts/).
+
 This is a variation of the [ecommerce Materialize demo](https://github.com/MaterializeInc/ecommerce-demo), illustrating how it could be extended so that you could use Materialize to send out abandoned cart notifications.
 
 ![Shop demo infra with redpanda](ecommerce-demo-rpm.png)
@@ -14,7 +17,9 @@ You'll need to have [docker and docker-compose installed](https://materialize.co
 
 ```shell session
 git clone https://github.com/bobbyiliev/materialize-tutorials.git
-cd materialize-tutorials/mz-abandoned-cart
+cd materialize-tutorials
+git checkout lts
+cd mz-abandoned-cart
 ```
 
 2. Build the necessary images by running:

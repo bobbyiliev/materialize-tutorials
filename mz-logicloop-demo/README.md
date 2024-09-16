@@ -1,5 +1,8 @@
 # Using LogicLoop and Materialize with dbt and Redpanda/Kafka
 
+> [!WARNING]
+> This demo includes examples for an unsupported version of [Materialize (0.26.x)](https://materialize.com/docs/lts/).
+
 ## Introduction
 
 LogicLoop allows you to write rules in SQL and then run them against your data and trigger different actions based on the results. LogicLoop also allows you to create and share dashboards and visualizations easily via their web interface.
@@ -29,9 +32,11 @@ A quick summary of the steps from the "[how to use dbt with Materialize and Redp
 ```
 # Clone the repository:
 git clone https://github.com/bobbyiliev/materialize-tutorials.git
+cd materialize-tutorials
+git checkout lts
 
 # Access the directory:
-cd materialize-tutorials/mz-user-reviews-dbt-demo
+cd mz-user-reviews-dbt-demo
 
 # Start by running the Redpanda container:
 docker-compose up -d redpanda

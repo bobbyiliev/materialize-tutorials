@@ -1,5 +1,8 @@
 # How to join MySQL and Postgres in a live materialized view
 
+> [!WARNING]
+> This demo includes examples for an unsupported version of [Materialize (0.26.x)](https://materialize.com/docs/lts/).
+
 This is a self-contained demo using [Materialize](https://materialize.com/).
 
 This demo would show you how to use Materialize to join MySQL and Postgres in a live materialized view. 
@@ -33,16 +36,18 @@ As shown in the diagram above we will have the following components:
 
 ## Running the demo
 
-First, start by cloning the repository:
+First, start by cloning the repository and checking out the `lts` branch:
 
 ```
 git clone https://github.com/bobbyiliev/materialize-tutorials.git
+cd materialize-tutorials
+git checkout lts
 ```
 
 After that you can access the directory:
 
 ```
-cd materialize-tutorials/mz-join-mysql-and-postgresql
+cd mz-join-mysql-and-postgresql
 ```
 
 Let's start by first running the Redpanda container:

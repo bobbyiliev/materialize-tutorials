@@ -1,5 +1,7 @@
 # How to manage your Materialize migrations with Laravel Zero
 ---
+> [!WARNING]
+> This demo includes examples for an unsupported version of [Materialize (0.26.x)](https://materialize.com/docs/lts/).
 
 ## Introduction
 

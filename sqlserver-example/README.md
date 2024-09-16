@@ -1,5 +1,8 @@
 ### Start the demo
 
+> [!WARNING]
+> This demo includes examples for an unsupported version of [Materialize (0.26.x)](https://materialize.com/docs/lts/).
+
 ```bash
 export DEBEZIUM_VERSION=1.9
 docker-compose up -d

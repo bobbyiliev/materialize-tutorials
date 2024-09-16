@@ -1,5 +1,8 @@
 # Using Materialize and Airbyte with MySQL and Redpanda/Kafka
 
+> [!WARNING]
+> This demo includes examples for an unsupported version of [Materialize (0.26.x)](https://materialize.com/docs/lts/).
+
 This is a self-contained demo using [Materialize](https://materialize.com).
 
 This demo would show you how to use Materialize with Airbyte to create a live dashboard.
